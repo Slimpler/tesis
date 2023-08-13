@@ -14,9 +14,6 @@ const AdminProfile = () => {
         <LinkCard title="Comunidad" to="/Aportes" color="blue">
           Ver Aportes
         </LinkCard>
-        <LinkCard title="Chat" to="/Chat" color="blue">
-          Ver Chat
-        </LinkCard>
       </div>
     </div>
   );
