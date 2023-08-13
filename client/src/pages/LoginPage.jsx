@@ -67,7 +67,7 @@ export function LoginPage() {
             <p className="text-red-500 text-sm">{errors.password?.message}</p>
           </div>
 
-          <Button className="w-full bg-white text-blue-500">Login</Button>
+          <Button className="w-full bg-white text-blue-500 flex justify-center">Login</Button>
         </form>
 
         <div className="mt-6 text-center">

@@ -6,6 +6,7 @@ import { ProtectedRoute, ProtectedRouteAdmin, ProtectedRoutePaciente } from "./r
 //Routes
 import { LoginPage } from "./pages/LoginPage"; 
 import ForgottenPassword from "./pages/ForgottenPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 //Comunidad
 import AportesPage from "./pages/ComunidadPages/admin/AportesPage";
@@ -42,7 +43,8 @@ function App() {
               
               <Route path="/" element={<LoginPage />} />
               <Route path="/forgot-password" element={<ForgottenPassword />} />
-
+              <Route path="/reset-password/" element={<ResetPassword />} />
+              
               <Route element={<ProtectedRoute />}>
                 {/* Admin and moderator */}
                 <Route element={<ProtectedRouteAdmin/>}>

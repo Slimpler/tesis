@@ -7,6 +7,10 @@ import bcrypt from "bcryptjs";
 import Diagnostico from "../models/diagnostico.model.js";
 import Tratamiento from "../models/tratamiento.model.js";
 import { transporter } from "../libs/mailer.js";
+import  jwt  from "jsonwebtoken";
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env.template' });
+
 
 // Obtener todos los usuarios con el campo 'state' igual a true
 export const getUsersTrue = async (req, res) => {
@@ -377,5 +381,90 @@ export const userProfile = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Error al obtener el perfil del paciente.' });
+  }
+};
+
+//Change Password
+export const sendMailChangePassword = async (req, res) => {
+  const tokenSecret = process.env.TOKEN_SECRET;
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ message: 'Debes proporcionar un correo electrónico' });
+    }
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    const token = jwt.sign({ userId: user._id }, tokenSecret, { expiresIn: '5min' });
+
+    const encodedToken = encodeURIComponent(token);
+
+    const resetPasswordUrl = `${process.env.FRONTEND_URL}/reset-password/`;
+
+    await transporter.sendMail({
+      from: 'nicolasde.oyarce@gmail.com',
+      to: user.email,
+      subject: 'Restablecimiento de Contraseña',
+      html: `
+        <p>Haz clic en el siguiente enlace para restablecer tu contraseña:</p>
+        <p><a href="${resetPasswordUrl}">Restablecer Contraseña</a></p>
+        <p>Copia y pega el siguiente token:</p>
+        <textarea style="width: 100%; height: 100px;" readonly>${encodedToken}</textarea>
+        <p>No lo compartas con nadie. Tienes 5 minutos para usarlo.</p>
+      `,
+    });
+
+    return res.status(200).json({ message: 'Correo electrónico enviado con éxito' });
+  } catch (error) {
+    console.error('Error al enviar el correo electrónico:', error);
+    return res.status(500).json({ message: 'Error al enviar el correo electrónico' });
+  }
+};
+
+export const resetPassword = async (req, res) => {
+  const tokenSecret = process.env.TOKEN_SECRET;
+  try {
+    const { token } = req.body;
+    const { newPassword } = req.body;
+
+    if (!token || !newPassword) {
+      return res.status(400).json({ message: 'Token y nueva contraseña son requeridos' });
+    }
+
+    const passwordHash = await bcrypt.hash(newPassword, 10);
+
+    let decodedToken;
+    try {
+      decodedToken = jwt.verify(token, tokenSecret);
+    } catch (verificationError) {
+      return res.status(401).json({ message: 'El token proporcionado no es válido' });
+    }
+
+    const userId = decodedToken.userId;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+
+    user.password = passwordHash;
+    await user.save();
+    await transporter.sendMail({
+      from: 'nicolasde.oyarce@gmail.com',
+      to: user.email,
+      subject: 'Contraseña reestablecida con EXITO',
+      html: `
+        <p>Contraseña modificada exitosamente...</p>
+      `,
+    });
+    return res.status(200).json({ message: 'Contraseña restablecida con éxito' });
+  } catch (error) {
+    console.error('Error al restablecer la contraseña:', error);
+    return res.status(500).json({ message: 'Error al restablecer la contraseña' });
   }
 };
