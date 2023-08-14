@@ -54,9 +54,9 @@ const ReportarSintomasPage = () => {
 
       // Envía la solicitud POST al endpoint de la API
       const res = await axios.post("/reportes/createReporte", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        }
+        // headers: {
+        //   "Content-Type": "multipart/form-data",
+        // }
       });
       navigate("/PacienteProfile"); // Use navigate to redirect to the home page after saving changes
       console.log("Nuevo reporte creado:", res.data);
