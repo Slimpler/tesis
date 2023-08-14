@@ -66,9 +66,59 @@ const CrearUsuarioPage = () => {
     });
   };
 
+  const calculateRutDigit = (rut) => {
+    let rutDigits = rut.replace(/[.-]/g, '').slice(0, -1);
+    let sum = 0;
+    let multiplier = 2;
+  
+    for (let i = rutDigits.length - 1; i >= 0; i--) {
+      sum += parseInt(rutDigits[i]) * multiplier;
+      multiplier = multiplier === 7 ? 2 : multiplier + 1;
+    }
+  
+    const remainder = sum % 11;
+    const calculatedDigit = 11 - remainder;
+  
+    if (calculatedDigit === 11) {
+      return '0';
+    } else if (calculatedDigit === 10) {
+      return 'K';
+    } else {
+      return calculatedDigit.toString();
+    }
+  };
+  
+  const validateRut = (rut) => {
+    if (!rut) {
+      return 'El RUT es obligatorio';
+    }
+  
+    const rutPattern = /^(\d{1,2}\.)?\d{3}\.\d{3}-[\dkK]$/;
+    
+    if (!rutPattern.test(rut)) {
+      return 'Por favor, ingresa un RUT válido (formato: 12.345.678-9)';
+    }
+  
+    const cleanRut = rut.replace(/[.-]/g, '');
+    const expectedDigit = cleanRut.slice(-1).toUpperCase();
+    const calculatedDigit = calculateRutDigit(cleanRut);
+  
+    if (calculatedDigit !== expectedDigit) {
+      return 'El dígito verificador del RUT no es válido';
+    }
+  
+    return '';
+  };
+  
+
   const validateForm = () => {
     let formIsValid = true;
     const newErrors = {};
+    const rutValidationResult = validateRut(formData.rut);
+    if (rutValidationResult !== '') {
+      newErrors.rut = rutValidationResult;
+      formIsValid = false;
+    }
 
     if (formData.password.length < 6) {
       newErrors.password = 'La contraseña debe tener al menos 6 caracteres';
@@ -83,12 +133,6 @@ const CrearUsuarioPage = () => {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if (!emailPattern.test(formData.email)) {
       newErrors.email = 'El email no es válido';
-      formIsValid = false;
-    }
-
-    const rutPattern = /^\d{7,8}-[0-9kK]$/;
-    if (!rutPattern.test(formData.rut)) {
-      newErrors.rut = 'Por favor, ingresa un RUT válido (formato: 12345678-9)';
       formIsValid = false;
     }
 
@@ -107,7 +151,7 @@ const CrearUsuarioPage = () => {
     if (!validateForm()) {
       return;
     }
-
+ 
     const isConfirmed = window.confirm('¿Estás seguro de crear este usuario?');
     if (!isConfirmed) {
       return;
@@ -129,7 +173,7 @@ const CrearUsuarioPage = () => {
         especialidad: '',
       });
       setErrors({});
-      setConfirmEmail(''); // Clear confirm email field
+      setConfirmEmail('');
       navigate('/ListaUsuarios');
     } catch (error) {
       console.error('Error al guardar los datos:', error);
@@ -148,6 +192,7 @@ const CrearUsuarioPage = () => {
             <input
               type="text"
               name="name"
+              placeholder='María'
               value={formData.name}
               onChange={handleChange}
               required
@@ -159,6 +204,7 @@ const CrearUsuarioPage = () => {
             <input
               type="text"
               name="lastname"
+              placeholder='Perez'
               value={formData.lastname}
               onChange={handleChange}
               required
@@ -170,6 +216,7 @@ const CrearUsuarioPage = () => {
             <input
               type="text"
               name="rut"
+              placeholder='12.345.678-9'
               value={formData.rut}
               onChange={handleChange}
               required
@@ -182,6 +229,7 @@ const CrearUsuarioPage = () => {
             <input
               type="email"
               name="email"
+              placeholder='email@correo.com'
               value={formData.email}
               onChange={handleChange}
               required
@@ -194,6 +242,7 @@ const CrearUsuarioPage = () => {
             <input
               type="email"
               name="confirmEmail"
+              placeholder='email@correo.com'
               value={confirmEmail}
               onChange={handleChange}
               required
@@ -207,6 +256,7 @@ const CrearUsuarioPage = () => {
             <input
               type="password"
               name="password"
+              placeholder='password'
               value={formData.password}
               onChange={handleChange}
               required
@@ -219,6 +269,7 @@ const CrearUsuarioPage = () => {
             <input
               type="password"
               name="confirmPassword"
+              placeholder='password'
               value={formData.confirmPassword}
               onChange={handleChange}
               required
@@ -231,6 +282,7 @@ const CrearUsuarioPage = () => {
             <input
               type="text"
               name="especialidad"
+              placeholder='Médico General'
               value={formData.especialidad}
               onChange={handleChange}
               className="rounded-lg px-4 py-2 border border-gray-300 focus:outline-none focus:border-blue-500 text-black"

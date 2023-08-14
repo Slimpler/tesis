@@ -30,7 +30,7 @@ router.get("/usersTrue", auth, isModerator, getUsersTrue);
 router.put("/changeState/:userId",auth, isModerator, changeState);
 
 //CRUD DE LOS USUARIOS
-router.get("/users", getUsers);
+router.get("/users", auth, isModerator, getUsers);
 router.get("/users/:id",auth, isModerator, getUser);
 router.post("/users", auth, isAdmin, validateSchema(registerSchema), createUser);
 router.put("/users/:id",auth, isModerator,  updateUser);

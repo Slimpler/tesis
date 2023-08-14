@@ -5,16 +5,27 @@ import { useAuth } from "../context/authContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Card, Message, Button, Input, Label } from "../components/ui";
-
+import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
 export function LoginPage() {
+  const [loginError, setLoginError] = useState(""); 
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: zodResolver(loginSchema),
   });
 
   const { signin, errors: loginErrors, isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
-  const onSubmit = (data) => signin(data);
+  const onSubmit = async (data) => {
+    const success = await signin(data);
+    if (!success) {
+      setLoginError("Correo o contraseña invalido"); 
+    }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -43,27 +54,36 @@ export function LoginPage() {
           <Message message={error} key={i} />
         ))}
 
+        {loginError && <Message message={loginError} />}
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <Label htmlFor="email" className="text-white">Email:</Label>
             <Input
-              label="Write your email"
+              label="Escribe tu correo"
               type="email"
               name="email"
-              placeholder="youremail@domain.tld"
+              placeholder="correo@domain.com"
               {...register("email", { required: true })}
             />
             <p className="text-red-500 text-sm">{errors.email?.message}</p>
           </div>
 
-          <div>
+          <div className="relative">
             <Label htmlFor="password" className="text-white">Password:</Label>
             <Input
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               name="password"
-              placeholder="Write your password"
+              placeholder="Escribe tu contraseña"
               {...register("password", { required: true, minLength: 6 })}
             />
+            <button
+              type="button"
+              onClick={togglePasswordVisibility}
+              className="absolute top-1/2 right-2 transform -translate-y-1/2 text-blue-500 focus:outline-none mt-3"
+            >
+              {showPassword ? <RiEyeOffFill /> : <RiEyeFill />}
+            </button>
             <p className="text-red-500 text-sm">{errors.password?.message}</p>
           </div>
 

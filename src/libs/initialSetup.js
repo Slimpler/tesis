@@ -57,7 +57,6 @@ export const createUser = async () => {
     const pacienteRole = await Role.findOne({ name: "paciente" });
 
     if (!adminRole || !moderatorRole || !pacienteRole) {
-      console.log("Asegúrate de haber creado los roles iniciales (admin, moderator, paciente) antes de crear el usuario.");
       return;
     }
 

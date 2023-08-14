@@ -35,6 +35,7 @@ app.use(
   })
 );
 
+
 // Crear roles iniciales y usuario con rol "admin"
 createInitialRoles();
 createUser();
@@ -52,6 +53,17 @@ app.use("/uploads", express.static(path.resolve("uploads")));
 
 // Ruta para producción
 if (process.env.NODE_ENV === "production") {
+  import("path").then((path) => {
+    app.use(express.static("client/dist"));
+
+    app.get("*", (req, res) => {
+      res.sendFile(path.resolve("client", "dist", "index.html"));
+    });
+  });
+}
+
+// Ruta para testeo
+if (process.env.NODE_ENV === "test") {
   import("path").then((path) => {
     app.use(express.static("client/dist"));
 

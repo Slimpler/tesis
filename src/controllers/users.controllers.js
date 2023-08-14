@@ -157,7 +157,7 @@ export const createUser = async (req, res) => {
         subject: `Hola ${savedUser.name}, bienvenido/a`,
         html: `Ya puedes ingresar al sistema, para iniciar sesión pon tu 
           correo: ${savedUser.email} y
-          contraseña: rut</b>`,
+          contraseña: Rut sin puntos ni guiones</b>`,
       });
       console.log('Correo electrónico enviado con éxito.');
     } catch (error) {

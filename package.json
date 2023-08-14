@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon src/index.js --ignore client",
     "start": "cross-env NODE_ENV=production node src/index.js",
-    "build": "npm i"
+    "build": "npm i",
+    "test": "cross-env NODE_ENV=development nodemon src/index.js --ignore client"
   },
   "keywords": [],
   "author": "",
