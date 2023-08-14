@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "../../api/axios";
 import { useAuth } from "../../context/authContext"; // Asegúrate de importar el contexto de autenticación si no lo has hecho
 import { useNavigate } from "react-router-dom";
-// import { AudioRecorder } from "react-audio-voice-recorder";
+import { AudioRecorder } from "react-audio-voice-recorder";
 
 const ReportarSintomasPage = () => {
   const { user } = useAuth(); // Mueve el hook dentro del componente funcional
@@ -23,18 +23,18 @@ const ReportarSintomasPage = () => {
     });
   };
 
-  // const addAudioElement = (blob) => {
-  //   const url = URL.createObjectURL(blob);
-  //   setBlobAudio(blob);
+  const addAudioElement = (blob) => {
+    const url = URL.createObjectURL(blob);
+    setBlobAudio(blob);
   
-  //   const audio = document.createElement("audio");
-  //   audio.src = url;
-  //   audio.controls = true;
+    const audio = document.createElement("audio");
+    audio.src = url;
+    audio.controls = true;
   
-  //   const span = document.getElementById("audio");
-  //   span.innerHTML = ""; // Limpiar el contenido previo
-  //   span.appendChild(audio);
-  // };
+    const span = document.getElementById("audio");
+    span.innerHTML = ""; // Limpiar el contenido previo
+    span.appendChild(audio);
+  };
   
 
   const handleSubmit = async (e) => {
@@ -50,13 +50,13 @@ const ReportarSintomasPage = () => {
         formData.append(key, reporteData[key]);
       }
 
-      // formData.append("audio", blobAudio);
+      formData.append("audio", blobAudio);
 
       // Envía la solicitud POST al endpoint de la API
       const res = await axios.post("/reportes/createReporte", formData, {
-        // headers: {
-        //   "Content-Type": "multipart/form-data",
-        // }
+        headers: {
+          "Content-Type": "multipart/form-data",
+        }
       });
       navigate("/PacienteProfile"); // Use navigate to redirect to the home page after saving changes
       console.log("Nuevo reporte creado:", res.data);
@@ -89,7 +89,7 @@ const ReportarSintomasPage = () => {
             Audio:
           </label>
           <div className="flex justify-between">
-            {/* <AudioRecorder
+            <AudioRecorder
               style={{ width: '240px', height: '40px' }}
               onRecordingComplete={addAudioElement}
               audioTrackConstraints={{
@@ -99,7 +99,7 @@ const ReportarSintomasPage = () => {
               // downloadOnSavePress={true}
               // downloadFileExtension="webm"
             />
-            <span id="audio"></span> */}
+            <span id="audio"></span>
           </div>
         </div>
         <div>
