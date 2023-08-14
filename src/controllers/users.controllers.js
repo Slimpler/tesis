@@ -457,7 +457,7 @@ export const resetPassword = async (req, res) => {
     await transporter.sendMail({
       from: 'nicolasde.oyarce@gmail.com',
       to: user.email,
-      subject: 'Contraseña reestablecida con EXITO',
+      subject: 'Contraseña restablecida con EXITO',
       html: `
         <p>Contraseña modificada exitosamente...</p>
       `,
