@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema } from "../schemas/auth";
-import { useAuth } from "../context/authContext";
+import { loginSchema } from "../../schemas/auth";
+import { useAuth } from "../../context/authContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { Card, Message, Button, Input, Label } from "../components/ui";
+import { Card, Message, Button, Input, Label } from "../../components/ui";
 import { RiEyeFill, RiEyeOffFill } from 'react-icons/ri';
+
 export function LoginPage() {
   const [loginError, setLoginError] = useState(""); 
   const { register, handleSubmit, formState: { errors } } = useForm({

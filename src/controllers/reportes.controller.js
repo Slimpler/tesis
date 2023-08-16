@@ -31,6 +31,7 @@ export const createReporte = async (req, res) => {
       escala,
       user: req.user.id,
     });
+    const userFound = await User.findById(req.user.id)
 
     if (req.files?.audio) {
       await req.files.audio.mv("./uploads/" + req.files.audio.md5 + ".webm");
@@ -38,6 +39,16 @@ export const createReporte = async (req, res) => {
     }
 
     await newReporte.save();
+    if(escala > 7){
+      await transporter.sendMail({
+        from: userFound.email,
+        to: "nicolasde.oyarce@gmail.com",
+        subject: `Paciente ${userFound.name}, ha ingresado un reporte con intensidad ${escala}`,
+        html: `
+          <p>Por favor, responder reporte a la brevedad</p>
+        `,
+      });
+    }
     return res.json(newReporte);
   } catch (error) {
     return res.status(500).json({ message: error.message });

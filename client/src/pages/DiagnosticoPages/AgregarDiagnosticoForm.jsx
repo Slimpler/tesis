@@ -28,19 +28,19 @@ const AgregarDiagnosticoForm = ({ pacienteId, cargarDiagnosticos }) => {
         withCredentials: true,
       });
 
-      // The diagnosis was created successfully
+      
       console.log('Diagnóstico creado:', response.data);
 
-      // Clear the form fields
+     
       setNombre('');
       setDescripcion('');
       setUrl('');
       setError(null);
 
-      // Reload the list of diagnoses to display the newly created diagnosis
+      
       cargarDiagnosticos();
     } catch (error) {
-      // Error while creating the diagnosis
+      
       setError(error.response.data.message);
     }
     finally{

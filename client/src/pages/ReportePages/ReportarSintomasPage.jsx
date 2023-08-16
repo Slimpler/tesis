@@ -8,6 +8,7 @@ const ReportarSintomasPage = () => {
   const { user } = useAuth(); // Mueve el hook dentro del componente funcional
   const navigate = useNavigate();
   const [blobAudio, setBlobAudio] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({
     sintoma: "",
     audio: "",
@@ -39,6 +40,11 @@ const ReportarSintomasPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (data.sintoma.trim() === "") {
+      console.log("El campo de síntoma no puede estar vacío");
+      return; // Detener el proceso de envío del formulario
+    }
     try {
       const reporteData = {
         ...data,
@@ -51,13 +57,26 @@ const ReportarSintomasPage = () => {
       }
 
       formData.append("audio", blobAudio);
-
       // Envía la solicitud POST al endpoint de la API
-      const res = await axios.post("/reportes/createReporte", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        }
-      });
+      try {
+        setIsLoading(true)
+        const res = await axios.post("/reportes/createReporte", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      
+        // Aquí puedes manejar la respuesta exitosa si es necesario
+        console.log("Respuesta exitosa:", res.data);
+      } catch (error) {
+        // Aquí manejas los errores
+        console.error("Error al hacer la solicitud:", error);
+      
+        // Puedes hacer cosas como mostrar un mensaje al usuario o realizar otra acción en caso de error
+      }
+      
+      
+      setIsLoading(false);
       navigate("/PacienteProfile"); // Use navigate to redirect to the home page after saving changes
       console.log("Nuevo reporte creado:", res.data);
       // Maneja el éxito o muestra un mensaje de éxito al usuario si es necesario
@@ -104,29 +123,56 @@ const ReportarSintomasPage = () => {
         </div>
         <div>
     
-  <label htmlFor="escala" className="block font-medium text-black">
-    Intensidad de 1 a 10:
-  </label>
-  <input
-    type="range"
-    id="escala"
-    name="escala"
-    min="1"
-    max="10"
-    value={data.escala}
-    onChange={handleChange}
-    className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none text-black focus:border-blue-500"
-  />
-  <span className="text-black">{data.escala}</span>
-</div>
+        <label htmlFor="escala" className="block font-medium text-black">
+          Intensidad de 1 a 10:
+        </label>
+        <input
+          type="range"
+          id="escala"
+          name="escala"
+          min="1"
+          max="10"
+          value={data.escala}
+          onChange={handleChange}
+          className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none text-black focus:border-blue-500"
+        />
+        {data.sintoma.trim() === "" && (
+          <p className="text-red-500">El campo de síntoma no puede estar vacío</p>
+        )}
+        <span className="text-black">{data.escala}</span>
+      </div>
 
 
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-        >
-          Crear Reporte
-        </button>
+      <button
+            type="submit"
+            className="bg-blue-500 text-white font-semibold rounded-lg px-4 py-2"
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <svg
+                className="animate-spin h-5 w-5 mr-3"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.86 3.182 7.98l2.828-2.828z"
+                ></path>
+              </svg>
+            ) : (
+              'Crear Reporte'
+            )}
+          </button>
       </form>
     </div>
   );

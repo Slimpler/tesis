@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "../../../api/axios";
+import axios from "../../api/axios";
 
 const EditarUsuarioPage = () => {
   const { id } = useParams();
@@ -9,7 +9,6 @@ const EditarUsuarioPage = () => {
     name: "",
     lastname: "",
     especialidad: "",
-    password: "",
   });
 
 
@@ -23,7 +22,6 @@ const EditarUsuarioPage = () => {
           name: usuario.name || "",
           lastname: usuario.lastname || "",
           especialidad: usuario.especialidad || "",
-          password: usuario.password || "",
         });
       } catch (error) {
         console.error("Error al cargar el usuario:", error);
@@ -88,16 +86,6 @@ const EditarUsuarioPage = () => {
             type="text"
             name="especialidad"
             value={formData.especialidad}
-            onChange={handleChange}
-            className="w-full rounded-lg px-4 py-2 border border-gray-300 focus:outline-none focus:border-blue-500 text-black"
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
             onChange={handleChange}
             className="w-full rounded-lg px-4 py-2 border border-gray-300 focus:outline-none focus:border-blue-500 text-black"
           />

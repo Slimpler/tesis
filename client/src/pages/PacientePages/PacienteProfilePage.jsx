@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../context/authContext';
 import axios from '../../api/axios';
 import { Link } from 'react-router-dom';
-import { getYoutubeVideoId } from '../../components/youtubeUtils';
 import ReactPlayer from 'react-player'
 
 

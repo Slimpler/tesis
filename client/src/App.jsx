@@ -3,31 +3,40 @@ import { Navbar } from "./components/Navbar";
 import { AuthProvider } from "./context/authContext";
 import { ProtectedRoute, ProtectedRouteAdmin, ProtectedRoutePaciente } from "./routes";  
 
-//Routes
-import { LoginPage } from "./pages/LoginPage"; 
-import ForgottenPassword from "./pages/ForgottenPassword";
-import ResetPassword from "./pages/ResetPassword";
+// InicioPages
+import { LoginPage } from "./pages/InicioPages/LoginPage";
+import ForgottenPassword from "./pages/InicioPages/ForgottenPassword";
+import ResetPassword from "./pages/InicioPages/ResetPassword";
 
-//Comunidad
+// ComunidadPages
 import AportesPage from "./pages/ComunidadPages/admin/AportesPage";
 import CreateAportePage from "./pages/ComunidadPages/paciente/PostPage";
 import ComunidadPage from "./pages/ComunidadPages/paciente/ComunidadPage";
 
-//AdminRelated
+// AdminPages
 import AdminProfile from "./pages/AdminPages/AdminProfilePage";
-import EditarUsuarioPage from "./pages/AdminPages/users/EditarUsuarioPage";
-import CrearUsuarioPage from './pages/AdminPages/users/CrearUsuarioPage';
-import ListaPacientesPage from "./pages/AdminPages/pacientes/ListaPacientesPage";
-import ListaUsuariosPage from "./pages/AdminPages/users/ListaUsuariosPage";
 
+// UsersPages (Admin)
+import EditarUsuarioPage from "./pages/UsersPages/EditarUsuarioPage";
+import CrearUsuarioPage from './pages/UsersPages/CrearUsuarioPage';
+import ListaUsuariosPage from "./pages/UsersPages/ListaUsuariosPage";
+
+// PacientePages
+import ListaPacientesPage from "./pages/PacientePages/ListaPacientesPage";
+
+// DiagnosticoPages (Admin)
 import AdministrarDiagnosticosPage from "./pages/DiagnosticoPages/AdministrarDiagnosticosPage";
+
+// TratamientoPages (Admin)
 import AdministrarTratamientosPage from "./pages/TratamientoPages/AdministrarTratamientosPage";
+
+// ReportePages (Admin)
 import ResponderReportesPage from "./pages/ReportePages/ResponderReportesPage";
 
-import ChatPage from "./pages/ChatPages/ChatPage";
-
-//PacienteRelated
+// PacientePages
 import PacienteProfilePage from "./pages/PacientePages/PacienteProfilePage";
+
+// ReportePages (Paciente)
 import ReportarSintomasPage from "./pages/ReportePages/ReportarSintomasPage";
 
 
@@ -60,7 +69,7 @@ function App() {
                   <Route path="/responderReporte/:reporteId" element={<ResponderReportesPage />} />
 
                   <Route path="/Aportes" element={<AportesPage/>}/>
-                  <Route path="/Chat" element={<ChatPage/>}/>
+                  
 
                 </Route>
                   
