@@ -70,7 +70,7 @@ function App() {
                     <Route path="/responderReporte/:reporteId" element={<ResponderReportesPage />} />
 
                     <Route path="/Aportes" element={<AportesPage/>}/>
-                    <Route path="/ModeratorProfile" element={<ModeratorProfile />} />
+                    <Route path="/ModeratorProfile" element={<ListaPacientesPage />} />
                   </Route>
 
                 </Route>
