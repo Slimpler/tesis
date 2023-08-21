@@ -1,18 +1,15 @@
 import { Link } from "react-router-dom";
 
-const AdminProfile = () => {
+
+
+const ModeratorProfile = () => {
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4 max-w-screen-lg w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4 px-4 max-w-screen-lg w-full">
         <LinkCard title="Pacientes" to="/ListaPacientes" color="blue">
           Ver Pacientes
         </LinkCard>
-        <LinkCard title="Usuarios" to="/ListaUsuarios" color="blue">
-          Ver Usuarios
-        </LinkCard>
-        <LinkCard title="Comunidad" to="/Aportes" color="blue">
-          Ver Aportes
-        </LinkCard>
+    
       </div>
     </div>
   );
@@ -31,4 +28,4 @@ const LinkCard = ({ title, to, color, children }) => {
   );
 };
 
-export default AdminProfile;
+export default ModeratorProfile;

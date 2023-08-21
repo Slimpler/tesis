@@ -1,5 +1,6 @@
 import Aporte from "../models/comunidad.model.js";
 import User from "../models/user.model.js";
+import { transporter } from "../libs/mailer.js";
 
 export const getAportes = async (req, res) => {
   try {
@@ -39,7 +40,17 @@ export const createAporte = async (req, res) => {
     });
 
     // Guardar el nuevo aporte en la base de datos
+
     await newAporte.save();
+    await transporter.sendMail({
+      from: user.email,
+      to: 'nicolasde.oyarce@gmail.com',
+      subject: 'Aporte enviado a la comunidad',
+      html: `
+        La paciente ${user.name}, ha realizado un aporte.
+        Revisarlo prontamente.
+      `,
+    });
 
     res.status(201).json(newAporte);
   } catch (error) {

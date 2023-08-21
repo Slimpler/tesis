@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Navbar } from "./components/Navbar";
 import { AuthProvider } from "./context/authContext";
-import { ProtectedRoute, ProtectedRouteAdmin, ProtectedRoutePaciente } from "./routes";  
+import { ProtectedRoute, ProtectedRouteAdmin, ProtectedRoutePaciente, ProtectedRouteModerator } from "./routes";  
 
 // InicioPages
 import { LoginPage } from "./pages/InicioPages/LoginPage";
@@ -39,7 +39,7 @@ import PacienteProfilePage from "./pages/PacientePages/PacienteProfilePage";
 // ReportePages (Paciente)
 import ReportarSintomasPage from "./pages/ReportePages/ReportarSintomasPage";
 
-
+import ModeratorProfile from "./pages/ModeratorPages/ModeratorProfilePage";
 
 function App() {
   return (
@@ -64,12 +64,14 @@ function App() {
                   <Route path="/crearusuario" element={<CrearUsuarioPage />} />
                   <Route path="/editarusuario/:id" element={<EditarUsuarioPage />} />
 
-                  <Route path="/diagnosticos/:pacienteId" element={<AdministrarDiagnosticosPage />} />
-                  <Route path="/tratamientos/:pacienteId" element={<AdministrarTratamientosPage />} />
-                  <Route path="/responderReporte/:reporteId" element={<ResponderReportesPage />} />
+                  <Route element={<ProtectedRouteModerator/>}>
+                    <Route path="/diagnosticos/:pacienteId" element={<AdministrarDiagnosticosPage />} />
+                    <Route path="/tratamientos/:pacienteId" element={<AdministrarTratamientosPage />} />
+                    <Route path="/responderReporte/:reporteId" element={<ResponderReportesPage />} />
 
-                  <Route path="/Aportes" element={<AportesPage/>}/>
-                  
+                    <Route path="/Aportes" element={<AportesPage/>}/>
+                    <Route path="/ModeratorProfile" element={<ModeratorProfile />} />
+                  </Route>
 
                 </Route>
                   

@@ -33,7 +33,7 @@ router.put("/changeState/:userId",auth, isModerator, changeState);
 router.get("/users", auth, isModerator, getUsers);
 router.get("/users/:id",auth, isModerator, getUser);
 router.post("/users", auth, isAdmin, validateSchema(registerSchema), createUser);
-router.put("/users/:id",auth, isModerator,  updateUser);
+router.put("/users/:id",auth, isAdmin,  updateUser);
 router.delete("/users/:id", auth, isAdmin, deleteUser);
 
 //Busqueda por tipo de usuario

@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../context/authContext';
 import axios from '../../api/axios';
 import { Link } from 'react-router-dom';
-import ReactPlayer from 'react-player'
-
+import ReactPlayer from 'react-player';
 
 const PacienteProfilePage = () => {
   const { user, loading } = useAuth();
@@ -39,8 +38,8 @@ const PacienteProfilePage = () => {
   });
 
   return (
-    <div className="max-w-2xl mx-auto p-4 ">
-      <h1 className="text-2xl font-bold mb-2">{`${perfilPaciente.name} ${perfilPaciente.lastname}`}</h1>
+    <div className="max-w-4xl mx-auto p-4 bg-gray-100 rounded-lg shadow-md text-black">
+      <h1 className="text-3xl font-bold mb-4 text-center">{`${perfilPaciente.name} ${perfilPaciente.lastname}`}</h1>
 
       <div className="mt-4">
         <h3 className="text-lg font-bold mb-2">Diagnósticos:</h3>
@@ -64,8 +63,8 @@ const PacienteProfilePage = () => {
                     {diagnostico.url ? (
                       <ReactPlayer
                         url={diagnostico.url}
-                        width="300px" // Adjust the width as needed
-                        height="200px" // Adjust the height as needed
+                        width="300px"
+                        height="200px"
                       />
                     ) : (
                       <p>No hay video disponible.</p>
@@ -76,7 +75,6 @@ const PacienteProfilePage = () => {
                 </tr>
               ))}
             </tbody>
-
           </table>
         ) : (
           <p>No hay diagnósticos disponibles.</p>
@@ -103,14 +101,14 @@ const PacienteProfilePage = () => {
                   <td className="border border-gray-400 px-4 py-2">{tratamiento.descripcion}</td>
                   <td className="border border-gray-400 px-4 py-2">
                     {tratamiento.url ? (
-                     <ReactPlayer url={tratamiento.url}
-                      width="300px" // Adjust the width as needed
-                      height="200px" // Adjust the height as needed
-                   />
-                 ) : (
-                   <p>No hay video disponible.</p>
-                 )}
-
+                      <ReactPlayer
+                        url={tratamiento.url}
+                        width="300px"
+                        height="200px"
+                      />
+                    ) : (
+                      <p>No hay video disponible.</p>
+                    )}
                   </td>
                   <td className="border border-gray-400 px-4 py-2">{tratamiento.medico?.nombre}</td>
                   <td className="border border-gray-400 px-4 py-2">{tratamiento.medico?.especialidad}</td>
@@ -126,7 +124,6 @@ const PacienteProfilePage = () => {
       <div className="mt-4">
         <h3 className="text-lg font-bold mb-2">Reportes:</h3>
         {reportesRecientes && reportesRecientes.length > 0 ? (
-          // Cambio aquí: usar el array de reportes filtrados
           <table className="w-full table border-collapse mb-4">
             <thead>
               <tr>
@@ -139,7 +136,6 @@ const PacienteProfilePage = () => {
             </thead>
             <tbody>
               {reportesRecientes.map((reporte) => (
-                // Cambio aquí: iterar sobre los reportes filtrados
                 <tr key={reporte._id}>
                   <td className="border border-gray-400 px-4 py-2">{reporte.sintoma}</td>
                   <td className="border border-gray-400 px-4 py-2">{reporte.escala}</td>
@@ -167,13 +163,18 @@ const PacienteProfilePage = () => {
         )}
       </div>
 
-      <div className="mt-8 flex flex-wrap">
-      
-        <Link to="/ReportarSintoma" className="bg-blue-500 text-white px-4 py-2 rounded block mb-2">
+      <div className="mt-8 flex flex-wrap justify-center">
+        <Link
+          to="/ReportarSintoma"
+          className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg block mx-2 mb-2"
+        >
           Reportar Síntoma
         </Link>
-      
-        <Link to="/ComunidadPage" className="bg-green-500 text-white px-4 py-2 ml-4 rounded block mb-2">
+
+        <Link
+          to="/ComunidadPage"
+          className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg block mx-2 mb-2"
+        >
           Comunidad
         </Link>
       </div>

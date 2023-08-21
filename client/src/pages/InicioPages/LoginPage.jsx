@@ -34,8 +34,8 @@ export function LoginPage() {
         console.log("Redirigiendo a /AdminProfile");
         navigate("/AdminProfile");
       } else if (user.roles.includes("moderator")) {
-        console.log("Redirigiendo a /moderatorProfile");
-        navigate("/AdminProfile");
+        console.log("Redirigiendo a /ModeratorProfile");
+        navigate("/ModeratorProfile");
       } else if (user.roles.includes("paciente")) {
         console.log("Redirigiendo a /PacienteProfile");
         navigate("/PacienteProfile");
@@ -88,12 +88,12 @@ export function LoginPage() {
             <p className="text-red-500 text-sm">{errors.password?.message}</p>
           </div>
 
-          <Button className="w-full bg-white text-blue-500 flex justify-center">Login</Button>
+          <Button className="w-full bg-white text-blue-500 flex justify-center">Iniciar Sesión</Button>
         </form>
 
         <div className="mt-6 text-center">
           <p className="text-sm text-white">
-            <Link to="/forgot-password" className="text-blue-300 hover:underline">Forgot password?</Link>
+            <Link to="/forgot-password" className="text-blue-300 hover:underline">¿Olvidaste tu contraseña?</Link>
           </p>
         </div>
       </Card>

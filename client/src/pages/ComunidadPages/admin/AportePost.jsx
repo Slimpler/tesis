@@ -40,8 +40,8 @@ const AportePost = ({ aporte, onDeleteAporte }) => {
           {aporte.url}
         </a>
       )}
-      <p className="text-gray-400 text-sm mb-1">Author: {aporte.user.nombre}</p>
-      <p className="text-gray-400 text-sm">Date: {new Date(aporte.date).toLocaleDateString()}</p>
+      <p className="text-gray-400 text-sm mb-1">Autor: {aporte.user.nombre}</p>
+      <p className="text-gray-400 text-sm">Fecha: {new Date(aporte.date).toLocaleDateString()}</p>
       <div className="flex items-center mt-2">
         <p className="text-gray-400 text-sm mr-2">State: {currentState ? 'Aceptado' : 'Rechazado'}</p>
         <button
@@ -55,7 +55,7 @@ const AportePost = ({ aporte, onDeleteAporte }) => {
           className="bg-red-500 text-white px-4 py-1 ml-2 rounded-md"
           onClick={handleDeleteAporte}
         >
-          Delete 
+          Eliminar 
         </button>
       </div>
     </div>

@@ -19,9 +19,11 @@ export function Navbar() {
       // Verificar si el rol "paciente" está presente en el arreglo de roles
       if (roles.includes("paciente")) {
         return "/PacienteProfile";
-      } else if (roles.includes("admin") || roles.includes("moderator")) {
+      } else if (roles.includes("admin")) {
         return "/AdminProfile";
-      } else {
+      } else if (roles.includes("moderator")){
+        return "/ModeratorProfile";
+      }else{
         // Si el rol no coincide con ninguno de los roles esperados, redirigir a la ruta predeterminada
         return "/";
       }
@@ -45,7 +47,7 @@ export function Navbar() {
               </li>
               <li>
                 <button className="logout-btn" onClick={handleLogout}>
-                  Logout
+                  Cerrar Sesión
                 </button>
               </li> 
             </>

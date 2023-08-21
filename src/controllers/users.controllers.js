@@ -400,7 +400,7 @@ export const sendMailChangePassword = async (req, res) => {
       return res.status(404).json({ message: 'Usuario no encontrado' });
     }
 
-    const token = jwt.sign({ userId: user._id }, tokenSecret, { expiresIn: '5min' });
+    const token = jwt.sign({ userId: user._id }, tokenSecret, { expiresIn: '5m' });
 
     const encodedToken = encodeURIComponent(token);
 

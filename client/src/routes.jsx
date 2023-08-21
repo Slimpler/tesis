@@ -42,3 +42,16 @@ export const ProtectedRoutePaciente = () => {
   return <Navigate to="/" replace />;
 };
 
+export const ProtectedRouteModerator = () => {
+  const { user, loading, isAuthenticated } = useAuth();
+  console.log('moderator')
+
+  if (loading) return <h1>Loading...</h1>;
+  if (!isAuthenticated && !loading) return <Navigate to="/" replace />;
+
+  if (user.roles.includes("moderator")) {
+    return <Outlet />;
+  }
+
+  return <Navigate to="/" replace />;
+};

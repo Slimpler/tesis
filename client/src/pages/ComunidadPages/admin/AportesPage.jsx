@@ -13,7 +13,9 @@ const AportesPage = () => {
         const response = await axios.get('/comunidad/getAportes');
         // Verificar si la respuesta contiene datos antes de actualizar el estado
         if (Array.isArray(response.data)) {
-          setAportes(response.data);
+          // Ordenar los aportes del más reciente al más antiguo
+          const sortedAportes = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+          setAportes(sortedAportes);
         } else {
           console.error('La respuesta del servidor no contiene datos de aportes:', response.data);
         }
