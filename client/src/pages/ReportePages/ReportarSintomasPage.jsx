@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "../../api/axios";
 import { useAuth } from "../../context/authContext"; // Asegúrate de importar el contexto de autenticación si no lo has hecho
 import { useNavigate } from "react-router-dom";
-import { AudioRecorder } from "react-audio-voice-recorder";
+// import { AudioRecorder } from "react-audio-voice-recorder";
 
 const ReportarSintomasPage = () => {
   const { user } = useAuth(); // Mueve el hook dentro del componente funcional
@@ -56,15 +56,15 @@ const ReportarSintomasPage = () => {
         formData.append(key, reporteData[key]);
       }
 
-      formData.append("audio", blobAudio);
-      // Envía la solicitud POST al endpoint de la API
-      try {
-        setIsLoading(true)
-        const res = await axios.post("/reportes/createReporte", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        });
+      // formData.append("audio", blobAudio);
+      // // Envía la solicitud POST al endpoint de la API
+      // try {
+      //   setIsLoading(true)
+      //   const res = await axios.post("/reportes/createReporte", formData, {
+      //     headers: {
+      //       "Content-Type": "multipart/form-data",
+      //     },
+      //   });
       
         // Aquí puedes manejar la respuesta exitosa si es necesario
         console.log("Respuesta exitosa:", res.data);
