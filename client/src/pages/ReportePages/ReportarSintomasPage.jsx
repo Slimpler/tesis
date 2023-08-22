@@ -24,18 +24,18 @@ const ReportarSintomasPage = () => {
     });
   };
 
-  const addAudioElement = (blob) => {
-    const url = URL.createObjectURL(blob);
-    setBlobAudio(blob);
+  // const addAudioElement = (blob) => {
+  //   const url = URL.createObjectURL(blob);
+  //   setBlobAudio(blob);
   
-    const audio = document.createElement("audio");
-    audio.src = url;
-    audio.controls = true;
+  //   const audio = document.createElement("audio");
+  //   audio.src = url;
+  //   audio.controls = true;
   
-    const span = document.getElementById("audio");
-    span.innerHTML = ""; // Limpiar el contenido previo
-    span.appendChild(audio);
-  };
+  //   const span = document.getElementById("audio");
+  //   span.innerHTML = ""; // Limpiar el contenido previo
+  //   span.appendChild(audio);
+  // };
   
 
   const handleSubmit = async (e) => {
@@ -66,14 +66,14 @@ const ReportarSintomasPage = () => {
       //     },
       //   });
       
-        // Aquí puedes manejar la respuesta exitosa si es necesario
-        console.log("Respuesta exitosa:", res.data);
-      } catch (error) {
-        // Aquí manejas los errores
-        console.error("Error al hacer la solicitud:", error);
+      //   // Aquí puedes manejar la respuesta exitosa si es necesario
+      //   console.log("Respuesta exitosa:", res.data);
+      // } catch (error) {
+      //   // Aquí manejas los errores
+      //   console.error("Error al hacer la solicitud:", error);
       
-        // Puedes hacer cosas como mostrar un mensaje al usuario o realizar otra acción en caso de error
-      }
+      //   // Puedes hacer cosas como mostrar un mensaje al usuario o realizar otra acción en caso de error
+      // }
       
       
       setIsLoading(false);
