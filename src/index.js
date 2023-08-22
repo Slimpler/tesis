@@ -1,8 +1,12 @@
+import dotenv from "dotenv";
+dotenv.config(); // Carga las variables de entorno desde el archivo .env
+
 import app from "./app.js";
 import { PORT } from "./config.js";
 import { connectDB } from "./db.js";
 
 async function main() {
+  console.log("PORT:", process.env.PORT);
   try {
     // Conecta la aplicación a la base de datos MongoDB
     await connectDB();
@@ -23,3 +27,4 @@ async function main() {
 
 // Ejecuta la función main para iniciar la aplicación
 main();
+ 

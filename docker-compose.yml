@@ -1,9 +1,9 @@
 version: '3.8'
 
 services:
-  tasksdb:
+  tesis-nicod:
     image: mongo
-    container_name: tasksdb
+    container_name: tesis-nicod
     restart: always
     ports:
       - 27017:27017

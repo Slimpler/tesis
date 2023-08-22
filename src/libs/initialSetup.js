@@ -68,6 +68,7 @@ export const createUser = async () => {
 
     console.log("Usuario creado exitosamente con el rol de 'admin'.");
   } catch (error) {
+    console.error("Error al crear roles o usuario:", error);
     console.error("Error al crear el usuario:", error.message);
   }
 };

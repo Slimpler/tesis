@@ -9,7 +9,7 @@ import Tratamiento from "../models/tratamiento.model.js";
 import { transporter } from "../libs/mailer.js";
 import  jwt  from "jsonwebtoken";
 import dotenv from 'dotenv';
-dotenv.config({ path: '.env.template' });
+dotenv.config({ path: '.env' });
 
 
 // Obtener todos los usuarios con el campo 'state' igual a true
