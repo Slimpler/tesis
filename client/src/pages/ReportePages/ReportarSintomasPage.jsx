@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "../../api/axios";
 import { useAuth } from "../../context/authContext"; // Asegúrate de importar el contexto de autenticación si no lo has hecho
 import { useNavigate } from "react-router-dom";
-// import { AudioRecorder } from "react-audio-voice-recorder";
+import { AudioRecorder } from "react-audio-voice-recorder";
 
 const ReportarSintomasPage = () => {
   const { user } = useAuth(); // Mueve el hook dentro del componente funcional
@@ -24,18 +24,18 @@ const ReportarSintomasPage = () => {
     });
   };
 
-  // const addAudioElement = (blob) => {
-  //   const url = URL.createObjectURL(blob);
-  //   setBlobAudio(blob);
+  const addAudioElement = (blob) => {
+    const url = URL.createObjectURL(blob);
+    setBlobAudio(blob);
   
-  //   const audio = document.createElement("audio");
-  //   audio.src = url;
-  //   audio.controls = true;
+    const audio = document.createElement("audio");
+    audio.src = url;
+    audio.controls = true;
   
-  //   const span = document.getElementById("audio");
-  //   span.innerHTML = ""; // Limpiar el contenido previo
-  //   span.appendChild(audio);
-  // };
+    const span = document.getElementById("audio");
+    span.innerHTML = ""; // Limpiar el contenido previo
+    span.appendChild(audio);
+  };
   
 
   const handleSubmit = async (e) => {
@@ -56,24 +56,24 @@ const ReportarSintomasPage = () => {
         formData.append(key, reporteData[key]);
       }
 
-      // formData.append("audio", blobAudio);
-      // // Envía la solicitud POST al endpoint de la API
-      // try {
-      //   setIsLoading(true)
-      //   const res = await axios.post("/reportes/createReporte", formData, {
-      //     headers: {
-      //       "Content-Type": "multipart/form-data",
-      //     },
-      //   });
+      formData.append("audio", blobAudio);
+      // Envía la solicitud POST al endpoint de la API
+      try {
+        setIsLoading(true)
+        const res = await axios.post("/reportes/createReporte", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
       
-      //   // Aquí puedes manejar la respuesta exitosa si es necesario
-      //   console.log("Respuesta exitosa:", res.data);
-      // } catch (error) {
-      //   // Aquí manejas los errores
-      //   console.error("Error al hacer la solicitud:", error);
+        // Aquí puedes manejar la respuesta exitosa si es necesario
+        console.log("Respuesta exitosa:", res.data);
+      } catch (error) {
+        // Aquí manejas los errores
+        console.error("Error al hacer la solicitud:", error);
       
-      //   // Puedes hacer cosas como mostrar un mensaje al usuario o realizar otra acción en caso de error
-      // }
+        // Puedes hacer cosas como mostrar un mensaje al usuario o realizar otra acción en caso de error
+      }
       
       
       setIsLoading(false);

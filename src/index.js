@@ -6,14 +6,13 @@ import { PORT } from "./config.js";
 import { connectDB } from "./db.js";
 
 async function main() {
-  console.log("PORT:", process.env.PORT);
   try {
     // Conecta la aplicación a la base de datos MongoDB
     await connectDB();
 
     // Inicia el servidor Express en el puerto especificado
     app.listen(PORT, () => {
-      console.log(`Server is running on http://127.0.0.1:${PORT}`);
+      console.log(`Server is running on port: ${PORT}`);
     });
 
     // Muestra el entorno en el que se está ejecutando la aplicación (development, production, etc.)
