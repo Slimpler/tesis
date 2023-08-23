@@ -10,7 +10,6 @@ export const connectDB = async () => {
     mongoose.set('strictQuery', true);
 
     // Realiza la conexión a la base de datos utilizando la URI de MongoDB especificada en la variable de entorno.
-    console.log("db", MONGODB_URI)
     await mongoose.connect(MONGODB_URI);
 
     // Si la conexión es exitosa, imprime un mensaje indicando que MongoDB está conectado.
