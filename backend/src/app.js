@@ -18,6 +18,7 @@ import { createUser, createInitialRoles } from "./libs/initialSetup.js";
 
 const app = express();
 
+console.log(FRONTEND_URL)
 // Middleware
 app.use(
   cors({

@@ -75,14 +75,15 @@ function App() {
 
                 </Route>
                   
-              </Route>
+              
                {/* Paciente */}
-              <Route element= {<ProtectedRoutePaciente/>}>   
-                <Route path="/PacienteProfile" element={<PacienteProfilePage />} />
-                <Route path="/ReportarSintoma" element={<ReportarSintomasPage />} />
-                <Route path="/PostPage" element={<CreateAportePage/>}/>
-                <Route path="/ComunidadPage" element={<ComunidadPage/>}/>
-              </Route>
+                <Route element= {<ProtectedRoutePaciente/>}>   
+                  <Route path="/PacienteProfile" element={<PacienteProfilePage />} />
+                  <Route path="/ReportarSintoma" element={<ReportarSintomasPage />} />
+                  <Route path="/PostPage" element={<CreateAportePage/>}/>
+                  <Route path="/ComunidadPage" element={<ComunidadPage/>}/>
+                </Route>
+                </Route>
             </Routes> 
           </main>
         </BrowserRouter>

@@ -22,7 +22,7 @@ export const ProtectedRouteAdmin = () => {
   if (loading) return <h1>Loading...</h1>;
   if (!isAuthenticated && !loading) return <Navigate to="/" replace />;
 
-  if (user.roles.includes("admin") || user.roles.includes("moderator")) {
+  if (user.roles.includes("admin")) {
     return <Outlet />;
   }
 
@@ -38,7 +38,7 @@ export const ProtectedRoutePaciente = () => {
   if (user.roles.includes("paciente")) {
     return <Outlet />;
   }
-
+  
   return <Navigate to="/" replace />;
 };
 
