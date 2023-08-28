@@ -29,12 +29,6 @@ app.use(
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cookieParser());
-app.use(
-  fileUpload({
-    useTempFiles: true,
-    tempFileDir: "./uploads",
-  })
-);
 
 
 // Crear roles iniciales y usuario con rol "admin"
@@ -50,27 +44,19 @@ app.use("/api/comunidad", comunidadRoutes);
 app.use("/api/diagnosticos", diagnosticosRoutes);
 app.use("/api/tratamientos", tratamientosRoutes);
 
-app.use("/uploads", express.static(path.resolve("uploads")));
 
-// Ruta para producción
+
+app.use(express.static("client/dist"));
+
 if (process.env.NODE_ENV === "production") {
-  import("path").then((path) => {
-    app.use(express.static("client/dist"));
-
-    app.get("*", (req, res) => {
-      res.sendFile(path.resolve("client", "dist", "index.html"));
-    });
+  // Ruta específica para producción
+  app.get("/", (req, res) => {
+    res.sendFile(path.resolve("client", "dist", "index.html"));
   });
-}
-
-// Ruta para testeo
-if (process.env.NODE_ENV === "test") {
-  import("path").then((path) => {
-    app.use(express.static("client/dist"));
-
-    app.get("*", (req, res) => {
-      res.sendFile(path.resolve("client", "dist", "index.html"));
-    });
+} else if (process.env.NODE_ENV === "test") {
+  // Ruta específica para testeo
+  app.get("/test", (req, res) => {
+    res.sendFile(path.resolve("client", "dist", "index.html"));
   });
 }
 
