@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon src/index.js --ignore client",
-    "start": "cross-env NODE_ENV=production node src/index.js --ignore client",
+    "start": "cross-env NODE_ENV=development nodemon src/index.js --ignore client",
     "build": "npm i",
     "test": "cross-env NODE_ENV=test nodemon src/index.js --ignore client"
   },
@@ -15,7 +15,6 @@
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "cloudinary": "^1.40.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "express": "^4.18.2",
