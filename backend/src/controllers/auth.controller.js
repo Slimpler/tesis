@@ -36,11 +36,13 @@ export const login = async (req, res) => {
       httpOnly: process.env.NODE_ENV !== "development",
       secure: true,
       sameSite: "none",
+      path: "/",
     });
     res.cookie("token", token, {
       httpOnly: process.env.NODE_ENV !== "production",
       secure: true,
       sameSite: "none",
+      path: "/",
     });
 
     // Obtener los nombres de los roles del usuario
