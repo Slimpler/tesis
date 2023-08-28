@@ -155,7 +155,7 @@ export const createUser = async (req, res) => {
         from: 'nicolasde.oyarce@gmail.com',
         to: savedUser.email,
         subject: `Hola ${savedUser.name}, bienvenido/a`,
-        html: `Ya puedes ingresar al sistema en el siguiente link http://localhost:5173/, para iniciar sesión pon tu 
+        html: `Ya puedes ingresar al sistema en el siguiente link https://nicolas-tesis.netlify.app/, para iniciar sesión pon tu 
           correo: ${savedUser.email} y
           contraseña: Rut sin puntos ni guiones</b>`,
       });
