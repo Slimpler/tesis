@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }) => {
     const checkLogin = async () => {
       const cookies = Cookies.get();
 
-      if (!cookies.token) {
+      if (!cookies.token || cookies.token === "") {
         setIsAuthenticated(false);
         setLoading(false);
         return;
