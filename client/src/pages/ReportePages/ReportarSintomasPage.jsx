@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import axios from "../../api/axios";
 import { useAuth } from "../../context/authContext"; // Asegúrate de importar el contexto de autenticación si no lo has hecho
 import { useNavigate } from "react-router-dom";
-// import { AudioRecorder } from "react-audio-voice-recorder";
+import { AudioRecorder } from "react-audio-voice-recorder";
 
 const ReportarSintomasPage = () => {
   const { user } = useAuth(); // Mueve el hook dentro del componente funcional
   const navigate = useNavigate();
-  // const [blobAudio, setBlobAudio] = useState(null);
+  const [blobAudio, setBlobAudio] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({
     sintoma: "",
@@ -24,18 +24,18 @@ const ReportarSintomasPage = () => {
     });
   };
 
-  // const addAudioElement = (blob) => {
-  //   const url = URL.createObjectURL(blob);
-  //   setBlobAudio(blob);
+  const addAudioElement = (blob) => {
+    const url = URL.createObjectURL(blob);
+    setBlobAudio(blob);
   
-  //   const audio = document.createElement("audio");
-  //   audio.src = url;
-  //   audio.controls = true;
+    const audio = document.createElement("audio");
+    audio.src = url;
+    audio.controls = true;
   
-  //   const span = document.getElementById("audio");
-  //   span.innerHTML = ""; // Limpiar el contenido previo
-  //   span.appendChild(audio);
-  // };
+    const span = document.getElementById("audio");
+    span.innerHTML = ""; // Limpiar el contenido previo
+    span.appendChild(audio);
+  };
   
 
   const handleSubmit = async (e) => {
@@ -103,7 +103,7 @@ const ReportarSintomasPage = () => {
             className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none text-black focus:border-blue-500"
           />
         </div>
-        {/* <div>
+        <div>
           <label htmlFor="audio" className="block font-medium  text-black">
             Audio:
           </label>
@@ -120,7 +120,7 @@ const ReportarSintomasPage = () => {
             />
             <span id="audio"></span>
           </div>
-        </div> */}
+        </div>
         <div>
     
         <label htmlFor="escala" className="block font-medium text-black">

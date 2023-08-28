@@ -28,7 +28,7 @@ const data = {
       });
 
       // El tratamiento se creó con éxito
-      console.log('Tratamiento creado:', response.data);
+      // console.log('Tratamiento creado:', response.data);
 
       // Limpiar los campos del formulario
       setNombre('');

@@ -64,7 +64,10 @@ function App() {
                   <Route path="/crearusuario" element={<CrearUsuarioPage />} />
                   <Route path="/editarusuario/:id" element={<EditarUsuarioPage />} />
 
-                  <Route element={<ProtectedRouteModerator/>}>
+                  
+
+                </Route>
+                <Route element={<ProtectedRouteModerator/>}>
                     <Route path="/diagnosticos/:pacienteId" element={<AdministrarDiagnosticosPage />} />
                     <Route path="/tratamientos/:pacienteId" element={<AdministrarTratamientosPage />} />
                     <Route path="/responderReporte/:reporteId" element={<ResponderReportesPage />} />
@@ -72,8 +75,6 @@ function App() {
                     <Route path="/Aportes" element={<AportesPage/>}/>
                     <Route path="/ModeratorProfile" element={<ListaPacientesPage />} />
                   </Route>
-
-                </Route>
                   
               
                {/* Paciente */}

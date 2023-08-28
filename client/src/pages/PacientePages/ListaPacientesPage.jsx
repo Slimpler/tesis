@@ -181,12 +181,12 @@ const ListaPacientesPage = () => {
                               >
                                 Eliminar
                               </button>
-                              {/* <audio
-                                src={`http://localhost:4001/uploads/${reporte.audio}`}
+                              <audio
+                                src={`${reporte.audio}`}
                                 controls
                                 className="ml-2"
-                                style={{ width: '240px', height: '40px' }}
-                              /> */}
+                                style={{ width: "240px", height: "40px" }}
+                              />
                             </li>
                           ))}
                           {paciente.reportes.filter(

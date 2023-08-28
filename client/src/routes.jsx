@@ -17,7 +17,7 @@ export const ProtectedRoute = () => {
 
 export const ProtectedRouteAdmin = () => {
   const { user, loading, isAuthenticated } = useAuth();
-  console.log('admin')
+  // console.log('admin')
 
   if (loading) return <h1>Loading...</h1>;
   if (!isAuthenticated && !loading) return <Navigate to="/" replace />;
@@ -30,7 +30,7 @@ export const ProtectedRouteAdmin = () => {
 };
 export const ProtectedRoutePaciente = () => {
   const { user, loading, isAuthenticated } = useAuth();
-  console.log('paciente')
+  // console.log('paciente')
 
   if (loading) return <h1>Loading...</h1>;
   if (!isAuthenticated && !loading) return <Navigate to="/" replace />;
@@ -44,7 +44,7 @@ export const ProtectedRoutePaciente = () => {
 
 export const ProtectedRouteModerator = () => {
   const { user, loading, isAuthenticated } = useAuth();
-  console.log('moderator')
+  // console.log('moderator')
 
   if (loading) return <h1>Loading...</h1>;
   if (!isAuthenticated && !loading) return <Navigate to="/" replace />;

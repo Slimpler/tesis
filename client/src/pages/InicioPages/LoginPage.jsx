@@ -31,13 +31,13 @@ export function LoginPage() {
   useEffect(() => {
     if (isAuthenticated) {
       if (user.roles.includes("admin")) {
-        console.log("Redirigiendo a /AdminProfile");
+        // console.log("Redirigiendo a /AdminProfile");
         navigate("/AdminProfile");
       } else if (user.roles.includes("moderator")) {
-        console.log("Redirigiendo a /ModeratorProfile");
+        // console.log("Redirigiendo a /ModeratorProfile");
         navigate("/ModeratorProfile");
       } else if (user.roles.includes("paciente")) {
-        console.log("Redirigiendo a /PacienteProfile");
+        // console.log("Redirigiendo a /PacienteProfile");
         navigate("/PacienteProfile");
       }
     }
