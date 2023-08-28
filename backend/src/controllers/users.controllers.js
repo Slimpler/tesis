@@ -149,13 +149,13 @@ export const createUser = async (req, res) => {
     const newUser = new User(userData);
     const savedUser = await newUser.save();
 
-    // Envío de correo electrónico
+    // Envío de correo electrónico 
     try {
       await transporter.sendMail({
         from: 'nicolasde.oyarce@gmail.com',
         to: savedUser.email,
         subject: `Hola ${savedUser.name}, bienvenido/a`,
-        html: `Ya puedes ingresar al sistema, para iniciar sesión pon tu 
+        html: `Ya puedes ingresar al sistema en el siguiente link http://localhost:5173/, para iniciar sesión pon tu 
           correo: ${savedUser.email} y
           contraseña: Rut sin puntos ni guiones</b>`,
       });

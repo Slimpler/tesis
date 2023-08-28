@@ -32,39 +32,37 @@ export const createDiagnostico = async (req, res) => {
     const newDiagnostico = new Diagnostico({
       nombre,
       descripcion,
-      medico: {
+      medico: { 
         nombre: req.user.name,
         especialidad: moderadorEspecialidad,
       },
       url,
       user: userFound._id,
     });
-
+  
     // Guardar el diagnóstico en la base de datos
     await newDiagnostico.save();
     // Realizar la populación de la información del usuario asociado al diagnóstico
     const diagnosticoPopulated = await Diagnostico.findById(newDiagnostico._id).populate("user");
-
+    // Enviar correo electrónico a la cuenta registrada por el usuario que crea el diagnóstico
     try {
       await transporter.sendMail({
         from: 'nicolasde.oyarce@gmail.com',
         to: diagnosticoPopulated.user.email,
         subject:`Hola, ${diagnosticoPopulated.user.name}`,
-        html: `<b>Se ha indicado un diagnostico el día ${diagnosticoPopulated.fechaInicio}</b>`,
+        html: `<b>Se ha indicado el diagnóstico "${diagnosticoPopulated.nombre}" el día ${diagnosticoPopulated.fechaInicio}</b>`,
       });
       console.log('Correo electrónico enviado con éxito.');
     } catch (error) {
       console.error('Error al enviar el correo electrónico:', error);
     }
-
-
-
     // Verificar si se pudo realizar la populación correctamente
     if (!diagnosticoPopulated) {
       return res.status(500).json({
         message: "Error al obtener la información del diagnóstico creado.",
       });
     }
+
 
     res.json(diagnosticoPopulated);
   } catch (error) {
@@ -149,7 +147,7 @@ export const getDiagnosticos = async (req, res) => {
     if (diagnosticos.length === 0) {
       return res.status(200).json({ message: "No se encontraron diagnósticos." });
     } else {
-      res.json(diagnosticos);
+      // res.json(diagnosticos);
     }
   } catch (error) {
     res.status(500).json({ message: error.message });

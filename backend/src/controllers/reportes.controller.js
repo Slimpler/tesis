@@ -2,6 +2,13 @@ import Reporte from "../models/reporte.model.js";
 import User from "../models/user.model.js";
 import Role from "../models/role.model.js";
 import { transporter } from "../libs/mailer.js";
+import {v2 as cloudinary} from 'cloudinary';
+          
+cloudinary.config({ 
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 export const getReportes = async (req, res) => {
   try {
@@ -35,7 +42,12 @@ export const createReporte = async (req, res) => {
 
     if (req.files?.audio) {
       await req.files.audio.mv("./uploads/" + req.files.audio.md5 + ".webm");
-      newReporte.audio = req.files.audio.md5 + ".webm";
+      const result = await cloudinary.uploader.upload("./uploads/" + req.files.audio.md5 + ".webm", {
+        resource_type: "auto",
+      })
+      // console.log(result)
+      // newReporte.audio = req.files.audio.md5 + ".webm";
+      newReporte.audio = result.secure_url;
     }
 
     await newReporte.save();
@@ -51,6 +63,7 @@ export const createReporte = async (req, res) => {
     }
     return res.json(newReporte);
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ message: error.message });
   }
 };

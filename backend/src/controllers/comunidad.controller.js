@@ -39,9 +39,7 @@ export const createAporte = async (req, res) => {
       user: { nombre: user.name }, // Asignar el nombre del usuario al campo "user.nombre" del aporte
     });
 
-    // Guardar el nuevo aporte en la base de datos
-
-    await newAporte.save();
+    //Enviar correo y Guardar el nuevo aporte en la base de datos
     await transporter.sendMail({
       from: user.email,
       to: 'nicolasde.oyarce@gmail.com',
@@ -51,6 +49,8 @@ export const createAporte = async (req, res) => {
         Revisarlo prontamente.
       `,
     });
+    await newAporte.save();
+  
 
     res.status(201).json(newAporte);
   } catch (error) {

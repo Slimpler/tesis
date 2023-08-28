@@ -51,7 +51,7 @@ export const createTratamiento = async (req, res) => {
         from: 'nicolasde.oyarce@gmail.com',
         to: tratamientoPopulated.user.email,
         subject:`Hola, ${tratamientoPopulated.user.name}`,
-        html: `<b>Se ha indicado un tratamiento el día ${tratamientoPopulated.fechaInicio}</b>`,
+        html: `<b>Se ha indicado el tratamiento "${tratamientoPopulated.nombre}" el día ${tratamientoPopulated.fechaInicio}</b>`,
       });
       console.log('Correo electrónico enviado con éxito.');
     } catch (error) {

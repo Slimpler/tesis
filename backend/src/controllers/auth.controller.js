@@ -11,9 +11,9 @@ export const login = async (req, res) => {
     const userFound = await User.findOne({
       $or: [{ rut }, { email }],
     }).populate("roles");
-    console.log(
-      {userFound}
-    )
+    // console.log(
+    //   {userFound}
+    // )
     if (!userFound || !userFound.state) {
       return res.status(400).json({
         message: ["The email and rut does not exist or the user is inactive"],
