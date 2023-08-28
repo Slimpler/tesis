@@ -49,7 +49,7 @@ export const ProtectedRouteModerator = () => {
   if (loading) return <h1>Loading...</h1>;
   if (!isAuthenticated && !loading) return <Navigate to="/" replace />;
 
-  if (user.roles.includes("moderator")||user.roles.includes("admin")) {
+  if (user.roles.includes("moderator")) {
     return <Outlet />;
   }
 

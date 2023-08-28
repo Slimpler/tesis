@@ -55,7 +55,7 @@ function App() {
               <Route path="/reset-password/" element={<ResetPassword />} />
               
               <Route element={<ProtectedRoute />}>
-                {/* Admin */}
+                {/* Admin and moderator */}
                 <Route element={<ProtectedRouteAdmin/>}>
                   <Route path="/AdminProfile" element={<AdminProfile />} />
                   <Route path="/ListaUsuarios" element={<ListaUsuariosPage />} />
@@ -67,7 +67,6 @@ function App() {
                   
 
                 </Route>
-                {/* Moderator */}
                 <Route element={<ProtectedRouteModerator/>}>
                     <Route path="/diagnosticos/:pacienteId" element={<AdministrarDiagnosticosPage />} />
                     <Route path="/tratamientos/:pacienteId" element={<AdministrarTratamientosPage />} />

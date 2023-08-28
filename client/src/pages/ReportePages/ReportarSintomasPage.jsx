@@ -38,44 +38,53 @@ const ReportarSintomasPage = () => {
   };
   
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  if (data.sintoma.trim() === "") {
-    console.log("El campo de síntoma no puede estar vacío");
-    return; // Detener el proceso de envío del formulario
-  }
-
-  try {
-    const reporteData = {
-      ...data,
-      user: user.id,
-    };
-
-    const formData = new FormData();
-    for (const key in reporteData) {
-      formData.append(key, reporteData[key]);
+    if (data.sintoma.trim() === "") {
+      console.log("El campo de síntoma no puede estar vacío");
+      return; // Detener el proceso de envío del formulario
     }
+    try {
+      const reporteData = {
+        ...data,
+        user: user.id,
+      };
 
-    formData.append("audio", blobAudio);
+      const formData = new FormData();
+      for (const key in reporteData) {
+        formData.append(key, reporteData[key]);
+      }
 
-    setIsLoading(true);
-    const res = await axios.post("/reportes/createReporte", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-
-    setIsLoading(false);
-    navigate("/PacienteProfile"); // Use navigate to redirect to the home page after saving changes
-    console.log("Nuevo reporte creado:", res.data); // Move this line inside the try block
-    // Maneja el éxito o muestra un mensaje de éxito al usuario si es necesario
-  } catch (error) {
-    console.log("Error al crear el reporte:", error);
-    // Maneja el error o muestra un mensaje de error al usuario si es necesario
-  }
-};
-
+      formData.append("audio", blobAudio);
+      // Envía la solicitud POST al endpoint de la API
+      try {
+        setIsLoading(true)
+        const res = await axios.post("/reportes/createReporte", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      
+        // Aquí puedes manejar la respuesta exitosa si es necesario
+        console.log("Respuesta exitosa:", res.data);
+      } catch (error) {
+        // Aquí manejas los errores
+        console.error("Error al hacer la solicitud:", error);
+      
+        // Puedes hacer cosas como mostrar un mensaje al usuario o realizar otra acción en caso de error
+      }
+      
+      
+      setIsLoading(false);
+      navigate("/PacienteProfile"); // Use navigate to redirect to the home page after saving changes
+      console.log("Nuevo reporte creado:", res.data);
+      // Maneja el éxito o muestra un mensaje de éxito al usuario si es necesario
+    } catch (error) {
+      console.log("Error al crear el reporte:", error);
+      // Maneja el error o muestra un mensaje de error al usuario si es necesario
+    }
+  };
 
   return (
     <div className="max-w-md mx-auto p-4 bg-white shadow-md rounded-lg">

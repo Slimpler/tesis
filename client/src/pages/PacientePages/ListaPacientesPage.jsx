@@ -77,7 +77,7 @@ const ListaPacientesPage = () => {
     const today = new Date();
     const reporteDate = new Date(date);
     const diffInDays = (today - reporteDate) / (1000 * 3600 * 24);
-    return diffInDays > 1;
+    return diffInDays > 2;
   };
 
   return (
