@@ -23,9 +23,11 @@ console.log(FRONTEND_URL)
 app.use(
   cors({
     credentials: true,
-    origin: FRONTEND_URL,
+    origin: ["https://tesis-nicolas-production.up.railway.app", "https://nicolas-tesis.netlify.app"],
   })
 );
+
+
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cookieParser());
