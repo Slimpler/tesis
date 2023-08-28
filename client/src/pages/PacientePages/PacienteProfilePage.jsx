@@ -62,14 +62,13 @@ const PacienteProfilePage = () => {
                     <td className="border border-gray-400 px-4 py-2">{diagnostico.descripcion}</td>
                     <td className="border border-gray-400 px-4 py-2">
                       {diagnostico.url ? (
-                        <ReactPlayer
-                          url={diagnostico.url}
-                          width="100%"
-                          height="0"
-                          style={{ paddingBottom: '56.25%' }} // 16:9 aspect ratio
-                        />
-                      ) : (
-                        <p>No hay video disponible.</p>
+                         <ReactPlayer
+                         url={diagnostico.url}
+                         width="300px"
+                         height="200px"
+                       />
+                     ) : (
+                       <p>No hay video disponible.</p>
                       )}
                     </td>
                     <td className="border border-gray-400 px-4 py-2">{diagnostico.medico?.nombre}</td>
@@ -106,14 +105,13 @@ const PacienteProfilePage = () => {
                     <td className="border border-gray-400 px-4 py-2">{tratamiento.descripcion}</td>
                     <td className="border border-gray-400 px-4 py-2">
                       {tratamiento.url ? (
-                        <ReactPlayer
-                          url={tratamiento.url}
-                          width="100%"
-                          height="100"
-                          style={{ paddingBottom: '56.25%' }} // 16:9 aspect ratio
-                        />
-                      ) : (
-                        <p>No hay video disponible.</p>
+                         <ReactPlayer
+                         url={diagnostico.url}
+                         width="300px"
+                         height="200px"
+                       />
+                     ) : (
+                       <p>No hay video disponible.</p>
                       )}
                     </td>
                     <td className="border border-gray-400 px-4 py-2">{tratamiento.medico?.nombre}</td>
