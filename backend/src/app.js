@@ -13,7 +13,7 @@ import reportesRoutes from "./routes/reportes.routes.js";
 import diagnosticosRoutes from "./routes/diagnosticos.routes.js";
 import tratamientosRoutes from "./routes/tratamientos.routes.js";
 
-import { FRONTEND_URL } from "./config.js";
+import { FRONTEND_URL, FRONTEND_URL2 } from "./config.js";
 import { createUser, createInitialRoles } from "./libs/initialSetup.js";
 
 const app = express();
@@ -23,7 +23,7 @@ console.log(FRONTEND_URL)
 app.use(
   cors({
     credentials: true,
-    origin: FRONTEND_URL,
+    origin: [FRONTEND_URL, FRONTEND_URL],
   })
 );
 app.use(express.json());
