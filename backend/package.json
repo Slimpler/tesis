@@ -1,12 +1,12 @@
 {
   "name": "tesis-nico",
   "version": "1.0.0",
-  "description": "A MERN CRUD with Authentication",
+  "description":"Tesis nicolas delgado",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon src/index.js --ignore client",
-    "start": "cross-env NODE_ENV=development nodemon src/index.js --ignore client",
+    "start": "cross-env NODE_ENV=production node src/index.js", 
     "build": "npm i",
     "test": "cross-env NODE_ENV=test nodemon src/index.js --ignore client"
   },
