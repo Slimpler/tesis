@@ -109,7 +109,7 @@ const PacienteProfilePage = () => {
                         <ReactPlayer
                           url={tratamiento.url}
                           width="100%"
-                          height="0"
+                          height="100"
                           style={{ paddingBottom: '56.25%' }} // 16:9 aspect ratio
                         />
                       ) : (
