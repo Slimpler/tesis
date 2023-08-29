@@ -20,7 +20,7 @@ export function LoginPage() {
   const onSubmit = async (data) => {
     const success = await signin(data);
     if (!success) {
-      setLoginError("Correo o contraseña invalido"); 
+      setLoginError("RUT o contraseña inválidos");
     }
   };
 
@@ -31,13 +31,10 @@ export function LoginPage() {
   useEffect(() => {
     if (isAuthenticated) {
       if (user.roles.includes("admin")) {
-        // console.log("Redirigiendo a /AdminProfile");
         navigate("/AdminProfile");
       } else if (user.roles.includes("moderator")) {
-        // console.log("Redirigiendo a /ModeratorProfile");
         navigate("/ModeratorProfile");
       } else if (user.roles.includes("paciente")) {
-        // console.log("Redirigiendo a /PacienteProfile");
         navigate("/PacienteProfile");
       }
     }
@@ -59,15 +56,15 @@ export function LoginPage() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <Label htmlFor="email" className="text-white">Email:</Label>
+            <Label htmlFor="rut" className="text-white">RUT:</Label>
             <Input
-              label="Escribe tu correo"
-              type="email"
-              name="email"
-              placeholder="correo@domain.com"
-              {...register("email", { required: true })}
+              label="Escribe tu RUT"
+              type="text"
+              name="rut"
+              placeholder="12345678-9"
+              {...register("rut")}
             />
-            <p className="text-red-500 text-sm">{errors.email?.message}</p>
+            <p className="text-red-500 text-sm">{errors.rut?.message}</p>
           </div>
 
           <div className="relative">

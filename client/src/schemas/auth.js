@@ -4,8 +4,8 @@ import { z } from "zod";
 const rutPattern = /^\d{7,8}-[0-9kK]$/;
 
 export const loginSchema = z.object({
-  email: z.string().email({
-    message: "Por favor, ingrese una dirección de correo electrónico válida",
+  rut: z.string().regex(/^\d{7,8}-[\dK]$/i, {
+    message: "Por favor, ingrese un RUT válido (formato: 12345678-9)",
   }),
   password: z.string().min(6, {
     message: "La contraseña debe tener al menos 6 caracteres",
