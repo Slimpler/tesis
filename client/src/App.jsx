@@ -55,12 +55,12 @@ function App() {
               <Route path="/reset-password/" element={<ResetPassword />} />
               
               <Route element={<ProtectedRoute />}>
-                {/* Admin and moderator */}
+                {/* Admin */}
                 <Route element={<ProtectedRouteAdmin/>}>
                   <Route path="/AdminProfile" element={<AdminProfile />} />
                   <Route path="/ListaUsuarios" element={<ListaUsuariosPage />} />
                   <Route path="/ListaPacientes" element={<ListaPacientesPage />} />
-
+                  <Route path="/Aportes" element={<AportesPage/>}/>
                   <Route path="/crearusuario" element={<CrearUsuarioPage />} />
                   <Route path="/editarusuario/:id" element={<EditarUsuarioPage />} />
 
@@ -71,9 +71,8 @@ function App() {
                     <Route path="/diagnosticos/:pacienteId" element={<AdministrarDiagnosticosPage />} />
                     <Route path="/tratamientos/:pacienteId" element={<AdministrarTratamientosPage />} />
                     <Route path="/responderReporte/:reporteId" element={<ResponderReportesPage />} />
-
-                    <Route path="/Aportes" element={<AportesPage/>}/>
                     <Route path="/ModeratorProfile" element={<ListaPacientesPage />} />
+                    <Route path="/Aportes" element={<AportesPage/>}/>
                   </Route>
                   
               
