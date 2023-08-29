@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(true);
     } catch (error) {
       console.log("Error signing in:", error);
-      // setErrors(error.response.data.message);
+      setErrors(error.response.data.message);
     }
   };
 
