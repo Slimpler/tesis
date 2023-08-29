@@ -42,7 +42,7 @@ export const login = async (req, res) => {
     const roleNames = userFound.roles.map((role) => role.name);
 
     res.json({
-      name: userFound.name, 
+      name: userFound.name,  
       email: userFound.email,
       roles: roleNames,
     });
