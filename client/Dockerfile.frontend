@@ -1,0 +1,21 @@
+FROM --platform=linux/amd64 node:16-bullseye
+
+# Directorio de trabajo dentro del contenedor
+WORKDIR /usr/src/app
+
+# Copia el archivo package.json y package-lock.json al directorio de trabajo
+COPY package*.json ./
+
+# Instala las dependencias
+
+
+# Copia todo el contenido de tu proyecto al directorio de trabajo
+COPY . .
+
+RUN npm install
+# Exponer el puerto en el que la aplicación va a escuchar (generalmente no es necesario para el frontend)
+EXPOSE 5173
+
+# Comando para iniciar la aplicación en modo de desarrollo (esto podría no ser necesario para el frontend)
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+
