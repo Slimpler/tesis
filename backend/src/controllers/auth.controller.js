@@ -33,7 +33,7 @@ export const login = async (req, res) => {
     });
 
     res.cookie("token", token, {
-      httpOnly: process.env.NODE_ENV !== "development",
+      httpOnly: process.env.NODE_ENV !== "production",
       secure: true,
       sameSite: "none",
     });
@@ -42,7 +42,7 @@ export const login = async (req, res) => {
     const roleNames = userFound.roles.map((role) => role.name);
 
     res.json({
-      name: userFound.name,
+      name: userFound.name, 
       email: userFound.email,
       roles: roleNames,
     });
@@ -50,32 +50,50 @@ export const login = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
-
 export const verifyToken = async (req, res) => {
-  const { token } = req.cookies;
-  if (!token) return res.send(false);
+  try {
+    const { token } = req.cookies;
+    
+    if (!token) {
+      return res.json(false); // Devolver falso si no hay token
+    }
 
-  jwt.verify(token, TOKEN_SECRET, async (error, user) => {
-    if (error) return res.sendStatus(401);
+    // Verificar el token
+    const user = jwt.verify(token, TOKEN_SECRET);
 
+    // Buscar al usuario por ID y obtener los roles
     const userFound = await User.findById(user.id).populate("roles");
-    const roles = userFound.roles.map((role) => role.name);
-    if (!userFound) return res.sendStatus(401);
+    if (!userFound) {
+      return res.sendStatus(401); // Usuario no encontrado
+    }
 
+    // Mapear los nombres de los roles
+    const roles = userFound.roles.map((role) => role.name);
+
+    // Devolver información del usuario autenticado
     return res.json({
-      id: userFound._id, 
+      id: userFound._id,
       name: userFound.name,
       email: userFound.email,
       roles,
     });
-  });
+  } catch (error) {
+    // Manejar errores de verificación o consulta a la base de datos
+    console.error(error);
+    return res.sendStatus(500); // Error interno del servidor
+  }
 };
 
+
 export const logout = async (req, res) => {
+  const isProduction = process.env.NODE_ENV === "production";
+
   res.cookie("token", "", {
     httpOnly: true,
-    secure: true,
+    secure: isProduction,
+    sameSite: isProduction ? "none" : "lax",
     expires: new Date(0),
   });
+
   return res.sendStatus(200);
 };

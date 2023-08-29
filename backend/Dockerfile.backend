@@ -1,0 +1,23 @@
+FROM --platform=linux/amd64 node:16-bullseye
+
+# Directorio de trabajo dentro del contenedor
+WORKDIR /usr/src/app
+
+# Copia el archivo package.json y package-lock.json al directorio de trabajo
+COPY package*.json ./
+
+# Instala las dependencias
+
+
+# Copia todo el contenido de tu proyecto al directorio de trabajo
+COPY . .
+#RUN cd ./backend
+# Instala las dependencias de tu proyecto
+#RUN rm -rf node_modules
+RUN npm install
+
+
+EXPOSE 4001
+# Ejecuta el comando npm run dev al iniciar el contenedor
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+

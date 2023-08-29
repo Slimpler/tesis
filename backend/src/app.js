@@ -18,7 +18,6 @@ import { createUser, createInitialRoles } from "./libs/initialSetup.js";
 
 const app = express();
 
-console.log(FRONTEND_URL)
 // Middleware
 app.use(
   cors({
@@ -36,7 +35,6 @@ app.use(
   })
 );
 
-
 // Crear roles iniciales y usuario con rol "admin"
 createInitialRoles();
 createUser();
@@ -52,27 +50,15 @@ app.use("/api/tratamientos", tratamientosRoutes);
 
 app.use("/uploads", express.static(path.resolve("uploads")));
 
-// Ruta para producción
-if (process.env.NODE_ENV === "production") {
-  import("path").then((path) => {
-    app.use(express.static("client/dist"));
+// Ruta para producción y pruebas
+if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "test") {
+  app.use(express.static("client/dist"));
 
-    app.get("*", (req, res) => {
-      res.sendFile(path.resolve("client", "dist", "index.html"));
-    });
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve("client", "dist", "index.html"));
   });
 }
 
-// Ruta para testeo
-if (process.env.NODE_ENV === "test") {
-  import("path").then((path) => {
-    app.use(express.static("client/dist"));
-
-    app.get("*", (req, res) => {
-      res.sendFile(path.resolve("client", "dist", "index.html"));
-    });
-  });
-}
 
 // Manejo de errores (middleware de última instancia)
 app.use((err, req, res, next) => {
@@ -81,6 +67,4 @@ app.use((err, req, res, next) => {
 });
 
 export default app;
-
-
-
+ 
