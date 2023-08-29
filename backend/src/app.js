@@ -23,7 +23,7 @@ console.log(FRONTEND_URL)
 app.use(
   cors({
     credentials: true,
-    origin: [FRONTEND_URL, FRONTEND_URL],
+    origin: [FRONTEND_URL2, FRONTEND_URL],
   })
 );
 app.use(express.json());

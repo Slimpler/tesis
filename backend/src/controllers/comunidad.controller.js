@@ -45,7 +45,7 @@ export const createAporte = async (req, res) => {
       to: 'nicolasde.oyarce@gmail.com',
       subject: 'Aporte enviado a la comunidad',
       html: `
-        La paciente ${user.name}, ha realizado un aporte.
+        La paciente ${user.name}, ha realizado un aporte.\l
         Revisarlo prontamente.
       `,
     });

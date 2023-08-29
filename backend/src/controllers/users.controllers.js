@@ -156,8 +156,10 @@ export const createUser = async (req, res) => {
         to: savedUser.email,
         subject: `Hola ${savedUser.name}, bienvenido/a`,
         html: `Ya puedes ingresar al sistema en el siguiente link https://nicolas-tesis.netlify.app/, para iniciar sesión pon tu 
-          correo: ${savedUser.email} y
-          contraseña: Rut sin puntos ni guiones</b>`,
+          Rut: ${savedUser.rut} y
+          contraseña: Rut sin puntos ni guiones</b>.\l
+          Te recomendamos cambiar tu conseña en el siguiente link: https://nicolas-tesis.netlify.app/forgot-password, ingresado tu correo
+          electrónico y siguiendo los pasos.`,
       });
       console.log('Correo electrónico enviado con éxito.');
     } catch (error) {
