@@ -7,16 +7,16 @@ import { createAccessToken } from "../libs/jwt.js";
 
 export const login = async (req, res) => {
   try {
-    const { email, rut, password } = req.body;
+    const { rut, password } = req.body;
     const userFound = await User.findOne({
-      $or: [{ rut }, { email }],
+      $or: [{ rut }],
     }).populate("roles");
     // console.log(
     //   {userFound}
     // )
     if (!userFound || !userFound.state) {
       return res.status(400).json({
-        message: ["The email and rut does not exist or the user is inactive"],
+        message: ["El rut no es válido"],
       });
     }
 
