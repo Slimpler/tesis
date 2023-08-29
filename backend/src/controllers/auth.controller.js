@@ -33,11 +33,11 @@ export const login = async (req, res) => {
     });
 
     res.cookie("token", token, {
-      httpOnly: process.env.NODE_ENV !== "production",
-      secure: true,
-      sameSite: "none",
+      httpOnly: false, // Siempre usar httpOnly para mayor seguridad
+      secure: process.env.NODE_ENV === "production", // Configurar según el entorno
+      sameSite: "none", // Configurar según tus necesidades y requisitos
     });
-
+    
     // Obtener los nombres de los roles del usuario
     const roleNames = userFound.roles.map((role) => role.name);
 
