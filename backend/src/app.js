@@ -13,16 +13,17 @@ import reportesRoutes from "./routes/reportes.routes.js";
 import diagnosticosRoutes from "./routes/diagnosticos.routes.js";
 import tratamientosRoutes from "./routes/tratamientos.routes.js";
 
-import { FRONTEND_URL} from "./config.js";
+import { FRONTEND_URL, FRONTEND_URL2 } from "./config.js";
 import { createUser, createInitialRoles } from "./libs/initialSetup.js";
 
 const app = express();
 
+console.log(FRONTEND_URL)
 // Middleware
 app.use(
   cors({
     credentials: true,
-    origin: [FRONTEND_URL],
+    origin: [FRONTEND_URL2, FRONTEND_URL],
   })
 );
 app.use(express.json());
@@ -34,6 +35,7 @@ app.use(
     tempFileDir: "./uploads",
   })
 );
+
 
 // Crear roles iniciales y usuario con rol "admin"
 createInitialRoles();
@@ -50,15 +52,27 @@ app.use("/api/tratamientos", tratamientosRoutes);
 
 app.use("/uploads", express.static(path.resolve("uploads")));
 
-// Ruta para producción y pruebas
+// Ruta para producción
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/dist"));
+  import("path").then((path) => {
+    app.use(express.static("client/dist"));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve("client", "dist", "index.html"));
+    app.get("*", (req, res) => {
+      res.sendFile(path.resolve("client", "dist", "index.html"));
+    });
   });
 }
 
+// Ruta para testeo
+if (process.env.NODE_ENV === "test") {
+  import("path").then((path) => {
+    app.use(express.static("client/dist"));
+
+    app.get("*", (req, res) => {
+      res.sendFile(path.resolve("client", "dist", "index.html"));
+    });
+  });
+}
 
 // Manejo de errores (middleware de última instancia)
 app.use((err, req, res, next) => {
@@ -67,4 +81,6 @@ app.use((err, req, res, next) => {
 });
 
 export default app;
- 
+
+
+
