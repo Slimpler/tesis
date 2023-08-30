@@ -56,4 +56,4 @@ networks:
       com.docker.network.enable_ipv6: "true"
 
 volumes:
-  mongodb-data:
+  mongodb-data: 
