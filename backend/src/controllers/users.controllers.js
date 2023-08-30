@@ -45,7 +45,7 @@ export const changeState = async (req, res) => {
   try {
     // Buscar el usuario por su ID en la base de datos
     const user = await User.findById(userId);
-
+    console.log(user)
     // Si el usuario no existe, responder con un mensaje de error
     if (!user) {
       return res.status(404).json({ message: 'Usuario no encontrado' });
@@ -60,8 +60,8 @@ export const changeState = async (req, res) => {
       await transporter.sendMail({
         from: 'nicolasde.oyarce@gmail.com',
         to: user.email,
-        subject: `Hola ${savedUser.name},`,
-        html: `Tu cuenta ha sido eliminada, para mayor información acercate al centro asistencias.
+        subject: `Hola ${user.name},`,
+        html: `Tu cuenta ha sido eliminada, para mayor información acercate al centro asistencial.
         Nos despedimos...`,
       });
       console.log('Correo electrónico enviado con éxito.');
