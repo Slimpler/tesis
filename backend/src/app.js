@@ -13,19 +13,29 @@ import reportesRoutes from "./routes/reportes.routes.js";
 import diagnosticosRoutes from "./routes/diagnosticos.routes.js";
 import tratamientosRoutes from "./routes/tratamientos.routes.js";
 
-import { FRONTEND_URL, FRONTEND_URL2 } from "./config.js";
+import { FRONTEND_URL } from "./config.js";
 import { createUser, createInitialRoles } from "./libs/initialSetup.js";
 
 const app = express();
 
 console.log(FRONTEND_URL)
 // Middleware
+// Middleware
 app.use(
   cors({
     credentials: true,
-    origin: [FRONTEND_URL2, FRONTEND_URL],
+    origin: [FRONTEND_URL],
+    exposedHeaders: ['set-cookie'],
+    preflightContinue: true,
   })
 );
+
+// Configuración de cabeceras de control de caché
+app.use((req, res, next) => {
+  res.header('Cache-Control', 'no-store');
+  next();
+});
+
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cookieParser());
@@ -35,7 +45,6 @@ app.use(
     tempFileDir: "./uploads",
   })
 );
-
 
 // Crear roles iniciales y usuario con rol "admin"
 createInitialRoles();

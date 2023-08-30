@@ -1,5 +1,3 @@
-import dotenv from "dotenv";
-dotenv.config(); // Carga las variables de entorno desde el archivo .env
 
 import app from "./app.js";
 import { PORT } from "./config.js";

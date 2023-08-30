@@ -33,7 +33,7 @@ export const login = async (req, res) => {
     });
 
     res.cookie("token", token, {
-      httpOnly: process.env.NODE_ENV !== "development",
+      httpOnly: process.env.NODE_ENV !== "production",
       secure: true,
       sameSite: "none",
     });
@@ -52,6 +52,7 @@ export const login = async (req, res) => {
 };
 
 export const verifyToken = async (req, res) => {
+  console.log("verificando tokencito")
   const { token } = req.cookies;
   if (!token) return res.send(false);
 
