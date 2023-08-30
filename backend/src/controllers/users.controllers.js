@@ -157,7 +157,7 @@ export const createUser = async (req, res) => {
         subject: `Hola ${savedUser.name}, bienvenido/a`,
         html: `Ya puedes ingresar al sistema en el siguiente link https://nicolas-tesis.netlify.app/, para iniciar sesión pon tu 
           Rut: ${savedUser.rut} y
-          contraseña: Rut sin puntos ni guiones</b>.\l
+          contraseña: Rut sin puntos ni guiones: ejemplo si tu rut es 12345678-9 tu contraseña será: 12345678 </b>.\l
           Te recomendamos cambiar tu conseña en el siguiente link: https://nicolas-tesis.netlify.app/forgot-password, ingresado tu correo
           electrónico y siguiendo los pasos.`,
       });

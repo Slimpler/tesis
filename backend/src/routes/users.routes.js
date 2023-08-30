@@ -26,7 +26,7 @@ router.post("/forgot-password", sendMailChangePassword);
 router.post("/reset-password/", resetPassword);
 
 //STATE
-router.get("/usersTrue", auth, isAdmin, getUsersTrue);
+router.get("/usersTrue", auth, isAdmin, getUsersTrue); 
 router.put("/changeState/:userId",auth, isAdmin, changeState);
 
 //CRUD DE LOS USUARIOS
@@ -39,7 +39,7 @@ router.delete("/users/:id", auth, isAdmin, deleteUser);
 //Busqueda por tipo de usuario
 router.get("/admins", auth, isAdmin, getAdmins);
 router.get("/moderators", auth, isAdmin, getModerators);
-router.get("/pacientes", auth, isAdmin, getPacientes);
+router.get("/pacientes", auth, isModerator, getPacientes);
 
 //Creacion y actualizacion del usuario y su perfil
 

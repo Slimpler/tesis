@@ -83,6 +83,7 @@ if (process.env.NODE_ENV === "test") {
   });
 }
 
+
 // Manejo de errores (middleware de última instancia)
 app.use((err, req, res, next) => {
   console.error(err.stack);
