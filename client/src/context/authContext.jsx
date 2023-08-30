@@ -57,6 +57,7 @@ export const AuthProvider = ({ children }) => {
       }
 
       try {
+        console.log("verificandotokencito")
         const res = await verifyTokenRequest(cookies.token);
         console.log(res.data)
         if (!res.data) {
