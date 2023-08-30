@@ -54,6 +54,20 @@ export const changeState = async (req, res) => {
     // Actualizar el campo state a false
     user.state = false;
 
+    
+    // Envío de correo electrónico 
+    try {
+      await transporter.sendMail({
+        from: 'nicolasde.oyarce@gmail.com',
+        to: user.email,
+        subject: `Hola ${savedUser.name},`,
+        html: `Tu cuenta ha sido eliminada, para mayor información acercate al centro asistencias.
+        Nos despedimos...`,
+      });
+      console.log('Correo electrónico enviado con éxito.');
+    } catch (error) {
+      console.error('Error al enviar el correo electrónico:', error);
+    }
     // Guardar los cambios en la base de datos
     await user.save();
 
