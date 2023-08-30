@@ -14,7 +14,7 @@ COPY . .
 
 RUN npm install
 # Exponer el puerto en el que la aplicación va a escuchar (generalmente no es necesario para el frontend)
-EXPOSE 5173
+EXPOSE 5173 
 
 # Comando para iniciar la aplicación en modo de desarrollo (esto podría no ser necesario para el frontend)
 CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
