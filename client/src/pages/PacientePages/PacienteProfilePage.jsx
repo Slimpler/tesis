@@ -106,7 +106,7 @@ const PacienteProfilePage = () => {
                     <td className="border border-gray-400 px-4 py-2">
                       {tratamiento.url ? (
                          <ReactPlayer
-                         url={diagnostico.url}
+                         url={tratamiento.url}
                          width="300px"
                          height="200px"
                        />
