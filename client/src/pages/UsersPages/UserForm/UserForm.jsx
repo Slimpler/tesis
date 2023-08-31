@@ -125,12 +125,12 @@ const UserForm = ({
             {rolesOptions.map((role) => (
               <label key={role._id} className="flex items-center space-x-2">
                 <input
-                  type="checkbox"
+                  type="radio"
                   name="roles"
                   value={role._id}
                   checked={formData.roles.includes(role._id)}
                   onChange={handleRolesChange}
-                  className="form-checkbox text-blue-500 focus:ring-blue-500 h-4 w-4"
+                  className="form-radio text-blue-500 focus:ring-blue-500 h-4 w-4"
                 />
                 <span className="text-white">{role.name}</span>
               </label>
@@ -138,7 +138,6 @@ const UserForm = ({
           </div>
           {errors.roles && <p className="text-red-500 text-sm">{errors.roles}</p>}
         </div>
-
         <div className="flex justify-center">
           <button
             type="submit"
