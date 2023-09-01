@@ -74,17 +74,16 @@ const handleRolesChange = (e) => {
     if (checked) {
       return {
         ...prevData,
-        [name]: [value], // Reemplaza cualquier rol previo con el nuevo rol
+        [name]: [...prevData[name], value],
       };
     } else {
       return {
         ...prevData,
-        [name]: [], // Deselecciona el rol
+        [name]: prevData[name].filter((role) => role !== value),
       };
     }
   });
 };
-
 
 const handleSubmit = async (e) => {
   e.preventDefault();
@@ -105,29 +104,34 @@ const handleSubmit = async (e) => {
 
   try {
     // Realizar la solicitud para crear el usuario en el backend
-    await axios.post('/user/users', formData);
+    const response = await axios.post('/user/users', formData);
 
     // Limpiar el formulario y redirigir
-    setFormData({
-      name: '',
-      lastname: '',
-      rut: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-      roles: [],
-      especialidad: '',
-    });
-    setErrors({});
-    setConfirmEmail('');
-    navigate('/ListaUsuarios');
+    if (response.status === 201) {
+      setFormData({
+        name: '',
+        lastname: '',
+        rut: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        roles: [],
+        especialidad: '',
+      });
+      setErrors({});
+      setConfirmEmail('');
+      navigate('/ListaUsuarios');
+    }
   } catch (error) {
-    console.error('Error al guardar los datos:', error);
+    if (error.response && error.response.status === 409) {
+      setErrors({ duplicate: 'El rut o el email ya están registrados.' });
+    } else {
+      console.error('Error al guardar los datos:', error);
+    }
   } finally {
     setIsLoading(false);
   }
 };
-
 // Renderización del componente
 return (
   <div className="max-w-screen-lg mx-auto p-9">

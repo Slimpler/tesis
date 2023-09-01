@@ -65,6 +65,7 @@ const UserForm = ({
               className="rounded-lg px-4 py-2 border border-gray-300 focus:outline-none focus:border-blue-500 text-black"
             />
             {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+            {/* {errors.duplicate && <p className="text-red-500 text-sm">{errors.duplicate}</p>}  */}
           </div>
           <div className="flex flex-col">
             <label htmlFor="confirmEmail">Confirmar Email:</label>
@@ -79,18 +80,18 @@ const UserForm = ({
             />
             {errors.confirmEmail && <p className="text-red-500 text-sm">{errors.confirmEmail}</p>}
           </div>
-          <div className="flex flex-col">
-          <label>Especialidad:</label>
-          <input
-            type="text"
-            name="especialidad"
-            placeholder="Médico General"
-            value={formData.especialidad}
-            onChange={handleChange}
-            className="rounded-lg px-4 py-2 border border-gray-300 focus:outline-none focus:border-blue-500 text-black"
-          />
-        </div>
-        <div className="flex flex-col">
+              <div className="flex flex-col">
+              <label>Especialidad:</label>
+              <input
+                type="text"
+                name="especialidad"
+                placeholder="Médico General"
+                value={formData.especialidad}
+                onChange={handleChange}
+                className="rounded-lg px-4 py-2 border border-gray-300 focus:outline-none focus:border-blue-500 text-black"
+              />
+            </div>
+            <div className="flex flex-col">
             <label htmlFor="password">Contraseña:</label>
             <input
                 type="password"
@@ -117,6 +118,9 @@ const UserForm = ({
             {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword}</p>}
             </div>
           {/* Más campos y secciones del formulario */}
+        <div>
+        {errors.duplicate && <p className="text-red-500 text-sm">{errors.duplicate}</p>}
+        </div>  
         </div>
 
         <div className="flex flex-col">
