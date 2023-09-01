@@ -69,20 +69,12 @@ const handleChange = (e) => {
 
 // Función para manejar cambios en las opciones de roles
 const handleRolesChange = (e) => {
-  const { name, value, checked } = e.target;
-  setFormData((prevData) => {
-    if (checked) {
-      return {
-        ...prevData,
-        [name]: [...prevData[name], value],
-      };
-    } else {
-      return {
-        ...prevData,
-        [name]: prevData[name].filter((role) => role !== value),
-      };
-    }
-  });
+  const { value } = e.target;
+
+  setFormData((prevData) => ({
+    ...prevData,
+    roles: [value], // Establece el rol seleccionado como el único elemento en el arreglo
+  }));
 };
 
 const handleSubmit = async (e) => {

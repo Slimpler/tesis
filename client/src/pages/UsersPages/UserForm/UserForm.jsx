@@ -132,7 +132,7 @@ const UserForm = ({
                   type="radio"
                   name="roles"
                   value={role._id}
-                  checked={formData.roles.includes(role._id)}
+                  checked={formData.roles[0] === role._id} // Comprueba si el rol es igual al seleccionado
                   onChange={handleRolesChange}
                   className="form-radio text-blue-500 focus:ring-blue-500 h-4 w-4"
                 />
