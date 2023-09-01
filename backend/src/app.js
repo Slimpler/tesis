@@ -64,10 +64,10 @@ app.use("/uploads", express.static(path.resolve("uploads")));
 // Ruta para producción
 if (process.env.NODE_ENV === "production") {
   import("path").then((path) => {
-    app.use(express.static("client/dist"));
+    app.use(express.static("client"));
 
     app.get("*", (req, res) => {
-      res.sendFile(path.resolve("client", "dist", "index.html"));
+      res.sendFile(path.resolve("client", "index.html"));
     });
   });
 }
