@@ -35,6 +35,7 @@ const ReportarSintomasPage = () => {
     const span = document.getElementById("audio");
     span.innerHTML = ""; // Limpiar el contenido previo
     span.appendChild(audio);
+    
   };
   
 
@@ -107,19 +108,20 @@ const ReportarSintomasPage = () => {
           <label htmlFor="audio" className="block font-medium  text-black">
             Audio:
           </label>
-          <div className="flex justify-between">
+          <div className="flex flex-col sm:flex-row justify-left items-center ">
+          <div style={{ flex: 1 }}>
             <AudioRecorder
-              style={{ width: '240px', height: '40px' }}
+              style={{ width: '80%', height: '20px' }}
               onRecordingComplete={addAudioElement}
               audioTrackConstraints={{
                 noiseSuppression: true,
                 echoCancellation: true,
               }}
-              // downloadOnSavePress={true}
-              // downloadFileExtension="webm"
             />
-            <span id="audio"></span>
           </div>
+          <div id="audio" className="mt-2 sm:mt-0 sm:ml-4"></div>
+        </div>
+
         </div>
         <div>
     

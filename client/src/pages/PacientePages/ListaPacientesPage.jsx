@@ -6,7 +6,11 @@ const ListaPacientesPage = () => {
   const [pacientes, setPacientes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const patientsPerPage = 5;
+  
+// Restricción de aportes a mostrar (opcional)
+const MAX_APORTES = 5;
   useEffect(() => {
     cargarPacientes();
   }, []);
@@ -59,7 +63,6 @@ const ListaPacientesPage = () => {
 
   const navigate = useNavigate();
 
-  // Función para filtrar los pacientes por nombre, apellido o cualquier otro campo
   const filteredPacientes = pacientes.filter((paciente) => {
     const searchText = `${paciente.name} ${paciente.lastname} ${
       paciente.rut
@@ -69,10 +72,13 @@ const ListaPacientesPage = () => {
     return searchText.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
-  // Restricción de aportes a mostrar (opcional)
-  const MAX_APORTES = 5;
+  const indexOfLastPatient = currentPage * patientsPerPage;
+  const indexOfFirstPatient = indexOfLastPatient - patientsPerPage;
+  const currentPatients = filteredPacientes.slice(
+    indexOfFirstPatient,
+    indexOfLastPatient
+  );
 
-  // Función para verificar si un reporte tiene más de 2 días de antigüedad
   const isReporteAntiguo = (date) => {
     const today = new Date();
     const reporteDate = new Date(date);
@@ -80,15 +86,20 @@ const ListaPacientesPage = () => {
     return diffInDays > 2;
   };
 
+  const handleSearch = (e) => {
+    const searchTerm = e.target.value;
+    setSearchTerm(searchTerm);
+    setCurrentPage(1);
+  };
+  const totalPages = Math.ceil(filteredPacientes.length / patientsPerPage);
   return (
     <div className="max-w-screen-lg mx-auto p-4 md:p-9 ">
       <h2 className="text-2xl font-bold mb-4">Lista de Pacientes</h2>
       <div className="mb-4">
-        {/* Input para el buscador */}
         <input
           type="text"
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={handleSearch}
           placeholder="Buscar por nombre, apellido, rut, diagnóstico, etc."
           className="border border-gray-300 px-4 py-2 rounded-md w-full text-black"
         />
@@ -96,7 +107,7 @@ const ListaPacientesPage = () => {
       <div className="overflow-x-auto">
         {loading ? (
           <p>Cargando pacientes...</p>
-        ) : filteredPacientes.length === 0 ? (
+        ) : currentPatients.length === 0 ? (
           <p>No hay pacientes que coincidan con la búsqueda.</p>
         ) : (
           <table className="table w-full border-collapse border border-gray-200">
@@ -111,7 +122,7 @@ const ListaPacientesPage = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredPacientes.map((paciente) => {
+              {currentPatients.map((paciente) => {
                 const reportesToShow = paciente.reportes
                   .filter(
                     (reporte) =>
@@ -226,6 +237,28 @@ const ListaPacientesPage = () => {
             </tbody>
           </table>
         )}
+      </div>
+      <div className="flex justify-center mt-4">
+        <button
+          onClick={() =>
+            setCurrentPage(currentPage > 1 ? currentPage - 1 : currentPage)
+          }
+          className="bg-gray-200 text-black font-semibold rounded-md px-4 py-2 mr-2"
+          disabled={currentPage === 1}
+        >
+          Anterior
+        </button>
+        <button
+          onClick={() =>
+            setCurrentPage(
+              currentPage < totalPages ? currentPage + 1 : currentPage
+            )
+          }
+          className="bg-gray-200 text-black font-semibold rounded-md px-4 py-2"
+          disabled={indexOfLastPatient >= filteredPacientes.length}
+        >
+          Siguiente
+        </button>
       </div>
     </div>
   );
