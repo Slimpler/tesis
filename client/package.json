@@ -8,7 +8,7 @@
     "start": "vite",
     "build": "vite build --debug",
     "preview": "vite preview",
-    "email": "email dev --dir src/emails"
+    "email": "email --dir src/emails"
   },
   "pnpm": {
     "frozen-lockfile": false

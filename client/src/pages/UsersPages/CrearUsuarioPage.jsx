@@ -74,16 +74,17 @@ const handleRolesChange = (e) => {
     if (checked) {
       return {
         ...prevData,
-        [name]: [...prevData[name], value],
+        [name]: [value], // Reemplaza cualquier rol previo con el nuevo rol
       };
     } else {
       return {
         ...prevData,
-        [name]: prevData[name].filter((role) => role !== value),
+        [name]: [], // Deselecciona el rol
       };
     }
   });
 };
+
 
 const handleSubmit = async (e) => {
   e.preventDefault();
