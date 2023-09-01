@@ -60,7 +60,7 @@ export const createUser = async () => {
       return;
     }
 
-    userData.roles = [adminRole._id, moderatorRole._id];
+    userData.roles = [adminRole._id];
 
     // Si no existe un usuario con el mismo correo, crear uno nuevo
     const newUser = new User(userData);
