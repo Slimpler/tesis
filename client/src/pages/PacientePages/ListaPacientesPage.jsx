@@ -8,9 +8,10 @@ const ListaPacientesPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const patientsPerPage = 5;
-  
-// Restricción de aportes a mostrar (opcional)
-const MAX_APORTES = 5;
+
+  // Restricción de aportes a mostrar (opcional)
+  const MAX_APORTES = 5;
+
   useEffect(() => {
     cargarPacientes();
   }, []);
@@ -91,7 +92,9 @@ const MAX_APORTES = 5;
     setSearchTerm(searchTerm);
     setCurrentPage(1);
   };
+
   const totalPages = Math.ceil(filteredPacientes.length / patientsPerPage);
+
   return (
     <div className="max-w-screen-lg mx-auto p-4 md:p-9 ">
       <h2 className="text-2xl font-bold mb-4">Lista de Pacientes</h2>
@@ -238,28 +241,30 @@ const MAX_APORTES = 5;
           </table>
         )}
       </div>
-      <div className="flex justify-center mt-4">
-        <button
-          onClick={() =>
-            setCurrentPage(currentPage > 1 ? currentPage - 1 : currentPage)
-          }
-          className="bg-gray-200 text-black font-semibold rounded-md px-4 py-2 mr-2"
-          disabled={currentPage === 1}
-        >
-          Anterior
-        </button>
-        <button
-          onClick={() =>
-            setCurrentPage(
-              currentPage < totalPages ? currentPage + 1 : currentPage
-            )
-          }
-          className="bg-gray-200 text-black font-semibold rounded-md px-4 py-2"
-          disabled={indexOfLastPatient >= filteredPacientes.length}
-        >
-          Siguiente
-        </button>
-      </div>
+      {totalPages > 1 && (
+        <div className="flex justify-center mt-4">
+          <button
+            onClick={() =>
+              setCurrentPage(currentPage > 1 ? currentPage - 1 : currentPage)
+            }
+            className="bg-gray-200 text-black font-semibold rounded-md px-4 py-2 mr-2"
+            disabled={currentPage === 1}
+          >
+            Anterior
+          </button>
+          <button
+            onClick={() =>
+              setCurrentPage(
+                currentPage < totalPages ? currentPage + 1 : currentPage
+              )
+            }
+            className="bg-gray-200 text-black font-semibold rounded-md px-4 py-2"
+            disabled={indexOfLastPatient >= filteredPacientes.length}
+          >
+            Siguiente
+          </button>
+        </div>
+      )}
     </div>
   );
 };

@@ -11,9 +11,7 @@ const AportesPage = () => {
     const fetchAportes = async () => {
       try {
         const response = await axios.get('/comunidad/getAportes');
-        // Verificar si la respuesta contiene datos antes de actualizar el estado
         if (Array.isArray(response.data)) {
-          // Ordenar los aportes del más reciente al más antiguo
           const sortedAportes = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
           setAportes(sortedAportes);
         } else {
@@ -58,22 +56,24 @@ const AportesPage = () => {
             <p>No hay aportes disponibles.</p>
           )}
         </div>
-        <div className="flex justify-center mt-4">
-          <button
-            className="bg-blue-500 text-white px-4 py-2 mx-2 rounded"
-            onClick={() => setCurrentPage(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            Anterior
-          </button>
-          <button
-            className="bg-blue-500 text-white px-4 py-2 mx-2 rounded"
-            onClick={() => setCurrentPage(currentPage + 1)}
-            disabled={indexOfLastAporte >= aportes.length}
-          >
-            Siguiente
-          </button>
-        </div>
+        {aportes.length > aportesPerPage && (
+          <div className="flex justify-center mt-4">
+            <button
+              className="bg-blue-500 text-white px-4 py-2 mx-2 rounded"
+              onClick={() => setCurrentPage(currentPage - 1)}
+              disabled={currentPage === 1}
+            >
+              Anterior
+            </button>
+            <button
+              className="bg-blue-500 text-white px-4 py-2 mx-2 rounded"
+              onClick={() => setCurrentPage(currentPage + 1)}
+              disabled={indexOfLastAporte >= aportes.length}
+            >
+              Siguiente
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
