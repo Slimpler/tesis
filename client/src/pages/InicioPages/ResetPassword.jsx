@@ -22,7 +22,7 @@ const ResetPassword = () => {
       setError('');
       setIsLoading(true);
 
-      const response = await axios.post(`/user/reset-password`, { token, newPassword: password });
+      const response = await axios.post(`/auth/reset-password`, { token, newPassword: password });
       setMessage(response.data.message); // Mensaje de éxito al cambiar la contraseña
       setIsLoading(false);
       

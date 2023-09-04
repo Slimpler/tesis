@@ -15,7 +15,7 @@ const ForgottenPassword = () => {
       setError('');
       setIsLoading(true);
       
-      const response = await axios.post('/user/forgot-password', { email });
+      const response = await axios.post('/auth/forgot-password', { email });
       setMessage(response.data.message);
       setIsLoading(false);
       
