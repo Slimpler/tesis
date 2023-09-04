@@ -9,7 +9,7 @@ export async function createAccessToken(payload) {
     }
 
     // Crear el token JWT con el payload proporcionado y una duración de 1 hora
-    const token = jwt.sign(payload, TOKEN_SECRET, { expiresIn: "1h" });
+    const token = jwt.sign(payload, TOKEN_SECRET, { expiresIn: "7d" });
     return token;
   } catch (error) {
     // Capturar cualquier error que ocurra durante la creación del token
