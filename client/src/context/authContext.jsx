@@ -48,18 +48,8 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const checkLogin = async () => {
-      // const cookies = Cookies.get();
-
-      // console.log(cookies)
-
-      // if (!cookies.token) {
-      //   setIsAuthenticated(false);
-      //   setLoading(false);
-      //   return;
-      // }
       try {
         const res = await verifyTokenRequest();
-        console.log(res.data)
         if (!res.data) {
           setIsAuthenticated(false);
           setLoading(false);
