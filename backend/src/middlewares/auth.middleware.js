@@ -4,7 +4,6 @@ import User from "../models/user.model.js";
 
 export const auth = async (req, res, next) => {
   try {
-    console.log(req.headers);
     const cookie = req.headers.cookie;
 
     if (!cookie) {
@@ -13,16 +12,16 @@ export const auth = async (req, res, next) => {
         .json({ message: "No token, authorization denied" });
     }
 
-    // const token = cookie.split("=")[1];
+    const token = cookie.split("=")[1];
 
-    // if (!token) {
-    //   return res
-    //     .status(401)
-    //     .json({ message: "No token, authorization denied" });
-    // }
+    if (!token) {
+      return res
+        .status(401)
+        .json({ message: "No token, authorization denied" });
+    }
 
     //Funcion de jsonwebtoken
-    jwt.verify(cookie, TOKEN_SECRET, async (error, payload) => {
+    jwt.verify(token, TOKEN_SECRET, async (error, payload) => {
       if (error) {
         return res.status(401).json({ message: "Token is not valid" });
       }
