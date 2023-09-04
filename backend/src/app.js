@@ -66,16 +66,6 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-// Ruta para testeo
-if (process.env.NODE_ENV === "test") {
-  import("path").then((path) => {
-    app.use(express.static("client/dist"));
-
-    app.get("*", (req, res) => {
-      res.sendFile(path.resolve("client", "dist", "index.html"));
-    });
-  });
-}
 
 // Manejo de errores (middleware de última instancia)
 app.use((err, req, res, next) => {

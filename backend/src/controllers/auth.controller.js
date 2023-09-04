@@ -37,7 +37,7 @@ export const login = async (req, res) => {
       // domain: "https://nicolas-tesis.netlify.app",
       // domain: "localhost",
       // path: "/",
-      expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 1 week
+      expires: new Date(Date.now() + 1000 * 60 * 60), // 1 week
     });
 
     // Obtener los nombres de los roles del usuario
