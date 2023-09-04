@@ -3,6 +3,8 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { TOKEN_SECRET } from "../config.js";
 import { createAccessToken } from "../libs/jwt.js";
+import Role from "../models/role.model.js";
+import { transporter } from "../libs/mailer.js";
 
 export const login = async (req, res) => {
   try {
@@ -99,7 +101,8 @@ export const sendMailChangePassword = async (req, res) => {
 
     if (!user) {
       return res.status(404).json({ message: "Usuario no encontrado" });
-    }
+    } 
+    console.log("sisisi")
 
     const token = jwt.sign({ userId: user._id }, tokenSecret, {
       expiresIn: "5m",
