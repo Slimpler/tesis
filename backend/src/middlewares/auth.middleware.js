@@ -6,6 +6,8 @@ export const auth = async (req, res, next) => {
   try {
     const cookie = req.headers.cookie;
 
+    console.log(req.headers);
+
     if (!cookie) {
       return res
         .status(401)
