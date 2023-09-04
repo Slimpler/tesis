@@ -25,16 +25,13 @@ export const createDiagnostico = async (req, res) => {
       });
     }
 
-    // Obtener la especialidad del moderador desde req.user
-    const moderadorEspecialidad = req.user.especialidad;
-
     // Crear un nuevo diagnóstico con la información proporcionada
     const newDiagnostico = new Diagnostico({
       nombre,
       descripcion,
       medico: { 
         nombre: req.user.name,
-        especialidad: moderadorEspecialidad,
+        especialidad: req.user.especialidad,
       },
       url,
       user: userFound._id,
@@ -62,8 +59,6 @@ export const createDiagnostico = async (req, res) => {
         message: "Error al obtener la información del diagnóstico creado.",
       });
     }
-
-
     res.json(diagnosticoPopulated);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -95,7 +90,7 @@ export const updateDiagnostico = async (req, res) => {
     diagnostico.nombre = nombre;
     diagnostico.descripcion = descripcion;
     diagnostico.url = url;
-
+    
     // Guardar los cambios en la base de datos
     const updatedDiagnostico = await diagnostico.save();
 

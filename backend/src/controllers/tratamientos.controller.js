@@ -24,17 +24,13 @@ export const createTratamiento = async (req, res) => {
         message: "Solo los usuarios con el rol 'paciente' pueden tener tratamientos.",
       });
     }
-
-    // Obtener la especialidad del moderador desde req.user
-    const moderadorEspecialidad = req.user.especialidad;
-
     // Crear un nuevo tratamiento con la información proporcionada
     const newTratamiento = new Tratamiento({
       nombre,
       descripcion,
       medico: {
         nombre: req.user.name,
-        especialidad: moderadorEspecialidad,
+        especialidad: req.user.especialidad,
       },
       url,
       user: userFound._id,
@@ -51,7 +47,8 @@ export const createTratamiento = async (req, res) => {
         from: 'nicolasde.oyarce@gmail.com',
         to: tratamientoPopulated.user.email,
         subject:`Hola, ${tratamientoPopulated.user.name}`,
-        html: `<b>Se ha indicado el tratamiento "${tratamientoPopulated.nombre}" el día ${tratamientoPopulated.fechaInicio}</b>`,
+        html: `<b>Se ha indicado el tratamiento "${tratamientoPopulated.nombre}" el día ${tratamientoPopulated.fechaInicio}</b>
+        <b>Para mayor información entra a tu perfil del sistema... </b>`,
       });
       console.log('Correo electrónico enviado con éxito.');
     } catch (error) {

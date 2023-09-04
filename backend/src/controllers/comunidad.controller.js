@@ -2,22 +2,6 @@ import Aporte from "../models/comunidad.model.js";
 import User from "../models/user.model.js";
 import { transporter } from "../libs/mailer.js";
 
-export const getAportes = async (req, res) => {
-  try {
-    // Obtener todos los aportes de la base de datos
-    const aportes = await Aporte.find();
-
-    // Si no hay aportes en la base de datos, devolver un mensaje indicando que está vacía
-    if (aportes.length === 0) {
-      return res.status(200).json({ message: "La base de datos de aportes está vacía." });
-    }
-
-    // Devolver la lista de aportes encontrados
-    res.json(aportes);
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-};
 
 export const createAporte = async (req, res) => {
   try {
@@ -76,16 +60,6 @@ export const deleteAporte = async (req, res) => {
   }
 };
 
-export const getAporte = async (req, res) => {
-  try {
-    const aporte = await Aporte.findById(req.params.id);
-    if (!aporte) return res.status(404).json({ message: "Aporte no encontrado." });
-    return res.json(aporte);
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-};
-
 export const showAportes = async (req, res) => {
   try {
     // Buscar todos los aportes con state igual a true
@@ -126,6 +100,34 @@ export const aceptarAporte = async (req, res) => {
     return res.json({ message: 'Estado del aporte cambiado exitosamente.', state: aporte.state });
   } catch (error) {
     // Si ocurre un error, enviar una respuesta de error
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+
+//NO USADAS ESTAS FUNCIONES
+export const getAporte = async (req, res) => {
+  try {
+    const aporte = await Aporte.findById(req.params.id);
+    if (!aporte) return res.status(404).json({ message: "Aporte no encontrado." });
+    return res.json(aporte);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+export const getAportes = async (req, res) => {
+  try {
+    // Obtener todos los aportes de la base de datos
+    const aportes = await Aporte.find();
+
+    // Si no hay aportes en la base de datos, devolver un mensaje indicando que está vacía
+    if (aportes.length === 0) {
+      return res.status(200).json({ message: "La base de datos de aportes está vacía." });
+    }
+
+    // Devolver la lista de aportes encontrados
+    res.json(aportes);
+  } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 };

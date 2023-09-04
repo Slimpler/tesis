@@ -10,6 +10,9 @@ const reporteSchema = new mongoose.Schema(
     audio: {
       type: String,
     },
+    imagen: {
+      type: String,
+    },
     escala: {
       type: String,
     },

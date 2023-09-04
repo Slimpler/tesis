@@ -31,7 +31,7 @@ export const getReportes = async (req, res) => {
 
 export const createReporte = async (req, res) => {
   try {
-    const { sintoma, audio, escala } = req.body;
+    const { sintoma, audio, imagen, escala } = req.body;
 
     const newReporte = new Reporte({
       sintoma,
@@ -41,8 +41,8 @@ export const createReporte = async (req, res) => {
     const userFound = await User.findById(req.user.id)
 
     if (req.files?.audio) {
-      await req.files.audio.mv("./uploads/" + req.files.audio.md5 + ".webm");
-      const result = await cloudinary.uploader.upload("./uploads/" + req.files.audio.md5 + ".webm", {
+      await req.files.audio.mv("./uploads/audios" + req.files.audio.md5 + ".webm");
+      const result = await cloudinary.uploader.upload("./uploads/audios" + req.files.audio.md5 + ".webm", {
         resource_type: "auto",
       })
       // console.log(result)

@@ -202,7 +202,7 @@ export const createUser = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, lastname, roles, password, especialidad } = req.body;
+    const { name, lastname, especialidad } = req.body;
 
     const existingUser = await User.findById(id);
 
@@ -216,29 +216,10 @@ export const updateUser = async (req, res) => {
     if (especialidad) newData.especialidad = especialidad;
     if (lastname) newData.lastname = lastname;
 
-    if (roles) {
-      const existingRoles = await Role.find({ _id: { $in: roles } });
-
-      if (existingRoles.length !== roles.length) {
-        return res.status(404).json({ message: 'Uno o más roles proporcionados no existen en la tabla "roles".' });
-      }
-
-      newData.roles = roles;
-    }
-
-    if (password) {
-      const passwordHash = await bcrypt.hash(password, 10);
-      newData.password = passwordHash;
-    }
-
     const updatedUser = await User.findByIdAndUpdate(id, { $set: newData }, { new: true });
 
     res.status(200).json(updatedUser);
   } catch (error) {
-    if (error.name === 'CastError' && error.path === '_id') {
-      return res.status(400).json({ message: 'El ID del rol proporcionado es incorrecto.' });
-    }
-
     console.log(error);
     res.status(500).json(error);
   }
@@ -400,87 +381,3 @@ export const userProfile = async (req, res) => {
   }
 };
 
-//Change Password
-export const sendMailChangePassword = async (req, res) => {
-  const tokenSecret = process.env.TOKEN_SECRET;
-  try {
-    const { email } = req.body;
-
-    if (!email) {
-      return res.status(400).json({ message: 'Debes proporcionar un correo electrónico' });
-    }
-
-    const user = await User.findOne({ email });
-
-    if (!user) {
-      return res.status(404).json({ message: 'Usuario no encontrado' });
-    }
-
-    const token = jwt.sign({ userId: user._id }, tokenSecret, { expiresIn: '5m' });
-
-    const encodedToken = encodeURIComponent(token);
-
-    const resetPasswordUrl = `${process.env.FRONTEND_URL}/reset-password/`;
-
-    await transporter.sendMail({
-      from: 'nicolasde.oyarce@gmail.com',
-      to: user.email,
-      subject: 'Restablecimiento de Contraseña',
-      html: `
-        <p>Haz clic en el siguiente enlace para restablecer tu contraseña:</p>
-        <p><a href="${resetPasswordUrl}">Restablecer Contraseña</a></p>
-        <p>Copia y pega el siguiente token:</p>
-        <textarea style="width: 100%; height: 100px;" readonly>${encodedToken}</textarea>
-        <p>No lo compartas con nadie. Tienes 5 minutos para usarlo.</p>
-      `,
-    });
-
-    return res.status(200).json({ message: 'Correo electrónico enviado con éxito' });
-  } catch (error) {
-    console.error('Error al enviar el correo electrónico:', error);
-    return res.status(500).json({ message: 'Error al enviar el correo electrónico' });
-  }
-};
-
-export const resetPassword = async (req, res) => {
-  const tokenSecret = process.env.TOKEN_SECRET;
-  try {
-    const { token } = req.body;
-    const { newPassword } = req.body;
-
-    if (!token || !newPassword) {
-      return res.status(400).json({ message: 'Token y nueva contraseña son requeridos' });
-    }
-
-    const passwordHash = await bcrypt.hash(newPassword, 10);
-
-    let decodedToken;
-    try {
-      decodedToken = jwt.verify(token, tokenSecret);
-    } catch (verificationError) {
-      return res.status(401).json({ message: 'El token proporcionado no es válido' });
-    }
-
-    const userId = decodedToken.userId;
-
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ message: 'Usuario no encontrado' });
-    }
-
-    user.password = passwordHash;
-    await user.save();
-    await transporter.sendMail({
-      from: 'nicolasde.oyarce@gmail.com',
-      to: user.email,
-      subject: 'Contraseña restablecida con EXITO',
-      html: `
-        <p>Contraseña modificada exitosamente...</p>
-      `,
-    });
-    return res.status(200).json({ message: 'Contraseña restablecida con éxito' });
-  } catch (error) {
-    console.error('Error al restablecer la contraseña:', error);
-    return res.status(500).json({ message: 'Error al restablecer la contraseña' });
-  }
-};

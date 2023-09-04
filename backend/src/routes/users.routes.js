@@ -11,8 +11,6 @@ import {
   getPacientes,
   getUsersTrue,
   changeState,
-  sendMailChangePassword,
-  resetPassword
 } from "../controllers/users.controllers.js";
 import { isAdmin, isModerator, isPaciente } from "../middlewares/roles.middleware.js";
 import { auth } from "../middlewares/auth.middleware.js";
@@ -21,9 +19,6 @@ import { validateSchema } from "../middlewares/validator.middleware.js";
 
 const router = Router();
 
-//CHANGEPASSWORD
-router.post("/forgot-password", sendMailChangePassword);
-router.post("/reset-password/", resetPassword);
 
 //STATE
 router.get("/usersTrue", auth, isAdmin, getUsersTrue); 
