@@ -11,7 +11,10 @@ const reporteSchema = new mongoose.Schema(
       type: String,
     },
     imagen: {
-      type: String,
+      type: String, 
+    },
+    imagenPublicId: {
+      type: String, 
     },
     escala: {
       type: String,

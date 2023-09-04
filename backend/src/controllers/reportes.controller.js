@@ -31,7 +31,7 @@ export const getReportes = async (req, res) => {
 
 export const createReporte = async (req, res) => {
   try {
-    const { sintoma, audio, imagen, escala } = req.body;
+    const { sintoma, escala } = req.body;
 
     const newReporte = new Reporte({
       sintoma,
@@ -48,6 +48,13 @@ export const createReporte = async (req, res) => {
       // console.log(result)
       // newReporte.audio = req.files.audio.md5 + ".webm";
       newReporte.audio = result.secure_url;
+    }
+    if (req.files?.imagen) {
+      const result = await cloudinary.uploader.upload(req.files.imagen.tempFilePath, {
+        resource_type: "auto",
+      });
+      newReporte.imagen = result.secure_url;
+      newReporte.imagenPublicId = result.public_id;
     }
 
     await newReporte.save();
