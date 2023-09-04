@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 import { API_URL } from "../config";
 
 const instance = axios.create({
@@ -6,10 +7,13 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-instance.interceptors.request.use(
-  (request) => {
-    console.log(request);
-    return request;
-  })
+instance.interceptors.request.use((request) => {
+  const token = Cookies.get("token");
+  if (token) {
+    request.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return request;
+});
 
 export default instance;

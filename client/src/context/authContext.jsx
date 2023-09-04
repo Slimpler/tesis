@@ -32,6 +32,7 @@ export const AuthProvider = ({ children }) => {
       const res = await loginRequest(user);
       console.log("User signed in successfully:", res);
       setUser(res.data);
+      Cookies.set("token", res.data.token);
       // console.log(res.data);
       setIsAuthenticated(true);
     } catch (error) {
@@ -42,6 +43,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     await logoutRequest();
+    Cookies.remove("token");
     setUser(null);
     setIsAuthenticated(false);
   };
