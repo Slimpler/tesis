@@ -25,9 +25,9 @@ app.use(morgan("dev"));
 app.use(
   cors({
     credentials: true,
-    // origin: [FRONTEND_URL],
-    // exposedHeaders: ['set-cookie'],
-    // preflightContinue: true,
+    origin: [FRONTEND_URL],
+    exposedHeaders: ['set-cookie'],
+    preflightContinue: true,
   })
 );
 

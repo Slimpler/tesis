@@ -54,7 +54,6 @@ export const changeState = async (req, res) => {
 
     // Actualizar el campo state a false
     user.state = false;
-
     
     // Envío de correo electrónico 
     try {
