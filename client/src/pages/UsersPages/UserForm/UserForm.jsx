@@ -41,7 +41,7 @@ const UserForm = ({
             {errors.lastname && <p className="text-red-500 text-sm">{errors.lastname}</p>}
           </div>
           <div className="flex flex-col">
-            <label htmlFor="rut">RUT:</label>
+            <label htmlFor="rut">RUT formato: 12345678-9:</label>
             <input
               type="text"
               name="rut"

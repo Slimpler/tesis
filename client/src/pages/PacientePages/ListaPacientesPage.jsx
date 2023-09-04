@@ -9,7 +9,7 @@ const ListaPacientesPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const patientsPerPage = 5;
 
-  // Restricción de aportes a mostrar (opcional)
+  // Restricción de aportes a mostrar 
   const MAX_APORTES = 5;
 
   useEffect(() => {
@@ -179,6 +179,29 @@ const ListaPacientesPage = () => {
                               <strong>Síntoma:</strong> {reporte.sintoma} -{" "}
                               <strong>Fecha:</strong>{" "}
                               {new Date(reporte.date).toLocaleDateString()}
+                              <audio
+                                src={`${reporte.audio}`}
+                                controls
+                                className="ml-2"
+                                style={{ width: "240px", height: "40px" }}
+                              />
+                              {reporte.imagen && (
+                                  <div className="mt-4 justify-center">
+                                  <a
+                                    href={reporte.imagen}
+                                    download
+                                  >
+                                    <img
+                                      src={reporte.imagen}
+                                      alt="Imagen del reporte"
+                                      style={{ width: "120px", height: "auto", cursor: "pointer" }}
+                                    />
+                                  </a>
+                                </div>
+            
+                                
+                                
+                                )}
                               <button
                                 className="text-yellow-500 ml-2"
                                 onClick={() =>
@@ -195,12 +218,7 @@ const ListaPacientesPage = () => {
                               >
                                 Eliminar
                               </button>
-                              <audio
-                                src={`${reporte.audio}`}
-                                controls
-                                className="ml-2"
-                                style={{ width: "240px", height: "40px" }}
-                              />
+                              
                             </li>
                           ))}
                           {paciente.reportes.filter(

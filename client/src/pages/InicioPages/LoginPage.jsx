@@ -56,7 +56,7 @@ export function LoginPage() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <Label htmlFor="rut" className="text-white">RUT:</Label>
+            <Label htmlFor="rut" className="text-white">RUT formato: 12345678-9:</Label>
             <Input
               label="Escribe tu RUT"
               type="text"
