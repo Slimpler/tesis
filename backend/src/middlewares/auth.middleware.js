@@ -6,24 +6,22 @@ export const auth = async (req, res, next) => {
   try {
     const cookie = req.headers.cookie;
 
-    console.log(req.headers);
-
     if (!cookie) {
       return res
         .status(401)
         .json({ message: "No token, authorization denied" });
     }
 
-    const token = cookie.split("=")[1];
+    // const token = cookie.split("=")[1];
 
-    if (!token) {
-      return res
-        .status(401)
-        .json({ message: "No token, authorization denied" });
-    }
+    // if (!token) {
+    //   return res
+    //     .status(401)
+    //     .json({ message: "No token, authorization denied" });
+    // }
 
     //Funcion de jsonwebtoken
-    jwt.verify(token, TOKEN_SECRET, async (error, payload) => {
+    jwt.verify(cookie, TOKEN_SECRET, async (error, payload) => {
       if (error) {
         return res.status(401).json({ message: "Token is not valid" });
       }
