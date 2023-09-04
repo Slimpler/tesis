@@ -4,6 +4,7 @@ import User from "../models/user.model.js";
 
 export const auth = async (req, res, next) => {
   try {
+    console.log(req.headers);
     const cookie = req.headers.cookie;
 
     if (!cookie) {
