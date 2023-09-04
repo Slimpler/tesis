@@ -18,26 +18,25 @@ import { createUser, createInitialRoles } from "./libs/initialSetup.js";
 
 const app = express();
 
-console.log(FRONTEND_URL)
-// Middleware
+console.log(FRONTEND_URL);
 // Middleware
 app.use(
   cors({
     credentials: true,
     origin: [FRONTEND_URL],
-    exposedHeaders: ['set-cookie'],
-    preflightContinue: true,
+    // exposedHeaders: ['set-cookie'],
+    
+    // preflightContinue: true,
   })
 );
 
 // Configuración de cabeceras de control de caché
 app.use((req, res, next) => {
-  res.header('Cache-Control', 'no-store');
+  res.header("Cache-Control", "no-store");
   next();
 });
 
 app.use(express.json());
-app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(
   fileUpload({
@@ -83,7 +82,6 @@ if (process.env.NODE_ENV === "test") {
   });
 }
 
-
 // Manejo de errores (middleware de última instancia)
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -91,6 +89,3 @@ app.use((err, req, res, next) => {
 });
 
 export default app;
-
-
-

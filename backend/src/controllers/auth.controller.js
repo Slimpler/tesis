@@ -51,7 +51,7 @@ export const login = async (req, res) => {
 };
 
 export const verifyToken = async (req, res) => {
-  console.log("verificando tokencito")
+ 
   const { token } = req.cookies;
   if (!token) return res.send(false);
 
