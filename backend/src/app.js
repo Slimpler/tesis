@@ -20,6 +20,8 @@ const app = express();
 
 console.log(FRONTEND_URL);
 // Middleware
+
+app.use(morgan("dev"));
 app.use(
   cors({
     credentials: true,

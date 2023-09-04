@@ -4,13 +4,20 @@ import User from "../models/user.model.js";
 
 export const auth = async (req, res, next) => {
   try {
-    const { token } = req.cookies;
+    const cookie = req.headers.cookie;
 
-    console.log(headers)
-    console.log(req.cookies);
+    if (!cookie) {
+      return res
+        .status(401)
+        .json({ message: "No token, authorization denied" });
+    }
+
+    const token = cookie.split("=")[1];
 
     if (!token) {
-      return res.status(401).json({ message: "No token, authorization denied" });
+      return res
+        .status(401)
+        .json({ message: "No token, authorization denied" });
     }
 
     //Funcion de jsonwebtoken
