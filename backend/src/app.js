@@ -29,12 +29,6 @@ app.use(
   })
 );
 
-// Configuración de cabeceras de control de caché
-// app.use((req, res, next) => {
-//   res.header("Cache-Control", "no-store");
-//   next();
-// });
-
 app.use(express.json());
 app.use(cookieParser());
 app.use(
