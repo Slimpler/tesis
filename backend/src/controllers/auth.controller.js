@@ -31,7 +31,7 @@ export const login = async (req, res) => {
     });
 
     res.cookie("token", token, {
-      httpOnly: false,
+      // httpOnly: false,
       // signed: true,
       // secure: true,
       sameSite: "none",
