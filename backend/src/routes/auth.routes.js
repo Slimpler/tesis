@@ -15,6 +15,6 @@ router.post("/logout", auth, logout);
 
 //CHANGEPASSWORD
 router.post("/forgot-password", sendMailChangePassword);
-router.post("/reset-password/", resetPassword);
+router.post("/reset-password", resetPassword);
 
 export default router;
