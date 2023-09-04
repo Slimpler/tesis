@@ -26,8 +26,8 @@ app.use(
   cors({
     credentials: true,
     origin: [FRONTEND_URL],
-    exposedHeaders: ['set-cookie'],
-    preflightContinue: true,
+    // exposedHeaders: ['set-cookie'],
+    // preflightContinue: true,
   })
 );
 
