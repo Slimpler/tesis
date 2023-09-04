@@ -35,6 +35,7 @@ export const login = async (req, res) => {
       // signed: true,
       // secure: true,
       sameSite: "none",
+      domain: "https://nicolas-tesis.netlify.app",
       // path: "/",
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7), // 1 week
     });
