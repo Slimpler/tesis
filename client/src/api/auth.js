@@ -19,4 +19,8 @@ export const loginRequest = async (user) =>
       throw error;
     }
   };
-  
+
+export const logoutRequest = async () =>
+  axios.post(`/auth/logout`, {
+    withCredentials: true,
+  });
