@@ -32,7 +32,7 @@ export const login = async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: false,
-      signed: true,
+      // signed: true,
       secure: true,
       sameSite: "none",
       path: "/",
