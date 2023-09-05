@@ -190,6 +190,7 @@ const ListaPacientesPage = () => {
                                   <a
                                     href={reporte.imagen}
                                     download
+                                    target="_blank"
                                   >
                                     <img
                                       src={reporte.imagen}

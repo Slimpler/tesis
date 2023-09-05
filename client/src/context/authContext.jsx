@@ -2,10 +2,10 @@ import { useEffect } from "react";
 import { createContext, useContext, useState } from "react";
 import { loginRequest, verifyTokenRequest, logoutRequest } from "../api/auth";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
+
 
 const AuthContext = createContext();
-const navigate = useNavigate();
+
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) throw new Error("useAuth must be used within a AuthProvider");
@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(true); // Asegúrate de que el estado de carga esté inicializado como true
-
+  
   // clear errors after 5 seconds
   useEffect(() => {
     if (errors.length > 0) {
@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }) => {
           setUser(res.data);
           setIsAuthenticated(true);
           setLoading(false);
-          navigate("/");
+          
         }
       } catch (error) {
         setIsAuthenticated(false);
