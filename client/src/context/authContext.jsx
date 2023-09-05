@@ -2,9 +2,10 @@ import { useEffect } from "react";
 import { createContext, useContext, useState } from "react";
 import { loginRequest, verifyTokenRequest, logoutRequest } from "../api/auth";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
-
+const navigate = useNavigate();
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) throw new Error("useAuth must be used within a AuthProvider");
@@ -61,10 +62,12 @@ export const AuthProvider = ({ children }) => {
           setUser(res.data);
           setIsAuthenticated(true);
           setLoading(false);
+          navigate("/");
         }
       } catch (error) {
         setIsAuthenticated(false);
         setLoading(false);
+
       }
     };
     checkLogin();

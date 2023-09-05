@@ -2,6 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { API_URL } from "../config";
 
+
 const instance = axios.create({
   baseURL: API_URL,
   withCredentials: true,
