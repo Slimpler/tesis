@@ -64,10 +64,13 @@ export const verifyToken = async (req, res) => {
     if (error) return res.sendStatus(401);
 
     const userFound = await User.findById(user.id).populate("roles");
-    const roles = userFound.roles.map((role) => role.name);
-    if (!userFound) return res.sendStatus(401);
+    const roles = userFound ? userFound.roles.map((role) => role.name) : [];
 
-    return res.json({
+    if (!userFound) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+
+    res.json({
       id: userFound._id,
       name: userFound.name,
       email: userFound.email,
