@@ -260,6 +260,15 @@ const ListaPacientesPage = () => {
           </table>
         )}
       </div>
+      <button
+            onClick={() =>
+             navigate("/listado-reportes-pacientes")
+            }
+            className="bg-gray-200 mt-5 text-black font-semibold rounded-md px-4 py-2 justify-center"
+            
+          >
+            Reportes
+        </button>
       {totalPages > 1 && (
         <div className="flex justify-center mt-4">
           <button

@@ -40,6 +40,8 @@ import PacienteProfilePage from "./pages/PacientePages/PacienteProfilePage";
 import ReportarSintomasPage from "./pages/ReportePages/ReportarSintomasPage";
 
 import ModeratorProfile from "./pages/ModeratorPages/ModeratorProfilePage";
+import ListadoReportesPage from "./pages/ReportePages/ListadoReportesPage";
+
 
 function App() {
   return (
@@ -73,6 +75,7 @@ function App() {
                     <Route path="/responderReporte/:reporteId" element={<ResponderReportesPage />} />
                     <Route path="/ModeratorProfile" element={<ListaPacientesPage />} />
                     <Route path="/Aportes" element={<AportesPage/>}/>
+                    <Route path="/listado-reportes-pacientes" element={<ListadoReportesPage/>}/>
                   </Route>
                   
               

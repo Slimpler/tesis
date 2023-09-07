@@ -38,6 +38,7 @@ const data = {
 
       // Recargar la lista de diagnósticos para mostrar el tratamiento recién creado
       cargarTratamientos();
+      setMostrarFormulario(false);
     } catch (error) {
       // Error al crear el tratamiento
       setError(error.response.data.message);

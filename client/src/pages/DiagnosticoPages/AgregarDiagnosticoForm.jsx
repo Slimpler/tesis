@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import axios from '../../api/axios';
-import { getYoutubeVideoId } from '../../components/youtubeUtils';
 
 const AgregarDiagnosticoForm = ({ pacienteId, cargarDiagnosticos }) => {
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
+  const [estadio, setEstadio] = useState('');
   const [url, setUrl] = useState('');
   const [error, setError] = useState(null);
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,6 +17,7 @@ const AgregarDiagnosticoForm = ({ pacienteId, cargarDiagnosticos }) => {
     const data = {
       nombre,
       descripcion,
+      estadio,
       userId: pacienteId,
       url,
     };
@@ -28,22 +29,20 @@ const AgregarDiagnosticoForm = ({ pacienteId, cargarDiagnosticos }) => {
         withCredentials: true,
       });
 
-      
       console.log('Diagnóstico creado:', response.data);
 
-     
       setNombre('');
       setDescripcion('');
+      setEstadio('');
       setUrl('');
       setError(null);
 
-      
       cargarDiagnosticos();
+      // Cerrar el formulario después de crear el diagnóstico
+      setMostrarFormulario(false);
     } catch (error) {
-      
       setError(error.response.data.message);
-    }
-    finally{
+    } finally {
       setIsLoading(false);
     }
   };
@@ -72,6 +71,22 @@ const AgregarDiagnosticoForm = ({ pacienteId, cargarDiagnosticos }) => {
             />
           </div>
           <div className="mb-2">
+            <label className="block font-bold text-black">Estadio:</label>
+            <select
+              value={estadio}
+              onChange={(e) => setEstadio(e.target.value)}
+              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500 text-black"
+              required
+            >
+              <option value="">Seleccione un estadio</option>
+              <option value="Estadio 1">Estadio 1</option>
+              <option value="Estadio 2">Estadio 2</option>
+              <option value="Estadio 3">Estadio 3</option>
+              <option value="Estadio 4">Estadio 4</option>
+            </select>
+          </div>
+
+          <div className="mb-2">
             <label className="block font-bold text-black">Descripción:</label>
             <textarea
               value={descripcion}
@@ -80,6 +95,7 @@ const AgregarDiagnosticoForm = ({ pacienteId, cargarDiagnosticos }) => {
               required
             />
           </div>
+
           <div className="mb-2">
             <label className="block font-bold text-black">URL:</label>
             <input
@@ -89,6 +105,7 @@ const AgregarDiagnosticoForm = ({ pacienteId, cargarDiagnosticos }) => {
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500 text-black" // Changed text color to black
             />
           </div>
+
           <button
             type="submit"
             className="bg-blue-500 text-white font-semibold rounded-lg px-4 py-2"
@@ -119,6 +136,7 @@ const AgregarDiagnosticoForm = ({ pacienteId, cargarDiagnosticos }) => {
               'Crear Diagnóstico'
             )}
           </button>
+
           {error && <p className="text-red-500 mt-2">Error al crear el diagnóstico: {error}</p>}
         </form>
       )}
