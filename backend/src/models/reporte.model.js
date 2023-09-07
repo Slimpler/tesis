@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 // cloudinary
 
 const reporteSchema = new mongoose.Schema(
-  {
+  { 
     sintoma: {
       type: String,
       required: true,
@@ -25,7 +25,7 @@ const reporteSchema = new mongoose.Schema(
     },
     respuesta: [{
       respuesta: {
-        type: String,
+        type: String, 
       },
       medico: {
         nombre: {

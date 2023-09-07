@@ -70,25 +70,16 @@ export const createTratamiento = async (req, res) => {
 
 export const updateTratamiento = async (req, res) => {
   try {
-    const { nombre, descripcion, userId, url } = req.body;
-    const { tratamientoId } = req.params;
+    const { nombre, descripcion, url } = req.body;
+    const { id } = req.params;
 
     // Verificar si el tratamiento existe en la base de datos
-    const tratamiento = await Tratamiento.findById(tratamientoId);
+    const tratamiento = await Tratamiento.findById(id);
     if (!tratamiento) {
       return res.status(404).json({
         message: "Tratamiento no encontrado",
       });
     }
-
-    // Verificar si el usuario existe en la base de datos
-    const userFound = await User.findById(userId);
-    if (!userFound) {
-      return res.status(400).json({
-        message: "El usuario no existe",
-      });
-    }
-
 
     // Actualizar la información del tratamiento
     tratamiento.nombre = nombre;

@@ -10,6 +10,9 @@ const diagnosticoSchema = new mongoose.Schema(
       type: String,
       require: true,
     },
+    estadio:{
+      type: String,
+    },
     medico: {
       nombre: String,
       especialidad: String,

@@ -7,7 +7,7 @@ const router = Router();
 
 
 router.post("/createTratamiento", auth, isModerator, createTratamiento);
-router.put("/updateTratamiento", auth, isModerator, updateTratamiento);
+router.put("/updateTratamiento/:id", auth, isModerator, updateTratamiento);
 router.delete("/deleteTratamiento/:id", auth, isModerator, deleteTratamiento);
 router.get("/getTratamientos", auth, isModerator, getTratamientos);
 router.get("/getTratamiento/:pacienteId", auth, isModerator, getTratamiento);

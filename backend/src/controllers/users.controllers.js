@@ -381,3 +381,30 @@ export const userProfile = async (req, res) => {
   }
 };
 
+// Obtener un usuario por su ID con sus roles
+export const getUserPacientes = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).populate('roles');
+
+    if (!user) {
+      return res.status(404).json({ message: 'El usuario no fue encontrado.' });
+    } else {
+      // Extraer solo los campos necesarios, incluyendo los nombres de los roles
+      const userData = {
+        _id: user._id,
+        name: user.name,
+        lastname: user.lastname,
+        rut: user.rut,
+        especialidad: user.especialidad,
+        email: user.email,
+        roles: user.roles.map(role => role.name),
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+      };
+
+      return res.json(userData);
+    }
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};

@@ -6,7 +6,7 @@ import { transporter } from "../libs/mailer.js";
 
 export const createDiagnostico = async (req, res) => {
   try {
-    const { nombre, descripcion, userId, url } = req.body;
+    const { nombre, descripcion, estadio, userId, url } = req.body;
 
     // Verificar si el usuario existe en la base de datos
     const userFound = await User.findById(userId);
@@ -29,6 +29,7 @@ export const createDiagnostico = async (req, res) => {
     const newDiagnostico = new Diagnostico({
       nombre,
       descripcion,
+      estadio,
       medico: { 
         nombre: req.user.name,
         especialidad: req.user.especialidad,
@@ -67,22 +68,14 @@ export const createDiagnostico = async (req, res) => {
 
 export const updateDiagnostico = async (req, res) => {
   try {
-    const { nombre, descripcion, userId, url } = req.body;
-    const { diagnosticoId } = req.params;
-
+    const { nombre, descripcion, estadio, url } = req.body;
+    const { id } = req.params;
+    console.log(id)
     // Verificar si el diagnóstico existe en la base de datos
-    const diagnostico = await Diagnostico.findById(diagnosticoId);
+    const diagnostico = await Diagnostico.findById(id);
     if (!diagnostico) {
       return res.status(404).json({
         message: "Diagnóstico no encontrado.",
-      });
-    }
-
-    // Verificar si el usuario existe en la base de datos
-    const userFound = await User.findById(userId);
-    if (!userFound) {
-      return res.status(400).json({
-        message: "El usuario no existe.",
       });
     }
 
@@ -90,6 +83,11 @@ export const updateDiagnostico = async (req, res) => {
     diagnostico.nombre = nombre;
     diagnostico.descripcion = descripcion;
     diagnostico.url = url;
+    diagnostico.estadio = estadio;
+    diagnostico.medico = {
+      nombre: req.user.name,
+      especialidad: req.user.especialidad,
+    };
     
     // Guardar los cambios en la base de datos
     const updatedDiagnostico = await diagnostico.save();

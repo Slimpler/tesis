@@ -24,6 +24,7 @@ export const getReportes = async (req, res) => {
 
     // Devolver la lista de reportes encontrados con la información del usuario asociado
     res.json(reportes);
+   
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

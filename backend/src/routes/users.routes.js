@@ -11,6 +11,7 @@ import {
   getPacientes,
   getUsersTrue,
   changeState,
+  getUserPacientes,
 } from "../controllers/users.controllers.js";
 import { isAdmin, isModerator, isPaciente } from "../middlewares/roles.middleware.js";
 import { auth } from "../middlewares/auth.middleware.js";
@@ -27,6 +28,7 @@ router.put("/changeState/:userId",auth, isAdmin, changeState);
 //CRUD DE LOS USUARIOS
 router.get("/users", auth, isAdmin, getUsers);
 router.get("/users/:id",auth, isAdmin, getUser);
+router.get("/usersPacientes/:id",auth, isModerator, getUserPacientes);
 router.post("/users", auth, isAdmin, validateSchema(registerSchema), createUser);
 router.put("/users/:id",auth, isAdmin,  updateUser);
 router.delete("/users/:id", auth, isAdmin, deleteUser);
