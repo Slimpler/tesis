@@ -105,7 +105,7 @@ export const aceptarAporte = async (req, res) => {
 };
 
 
-//NO USADAS ESTAS FUNCIONES
+//NO USADAS 
 export const getAporte = async (req, res) => {
   try {
     const aporte = await Aporte.findById(req.params.id);

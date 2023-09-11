@@ -136,8 +136,8 @@ const ListadoReportesPacientesPage = () => {
                     reporte.respuesta.map((respuestaItem, index) => (
                       <div key={index}>
                         <div><strong>Respuesta:</strong> {respuestaItem.respuesta}</div>
-                        <div><strong>Médico:</strong> {respuestaItem.medico ? respuestaItem.medico.nombre : "N/A"}</div>
-                        <div><strong>Especialidad:</strong> {respuestaItem.medico ? respuestaItem.medico.especialidad : "N/A"}</div>
+                        <div><strong>Médico:</strong> {respuestaItem.personalSalud ? respuestaItem.personalSalud.nombre : "N/A"}</div>
+                        <div><strong>Especialidad:</strong> {respuestaItem.personalSalud ? respuestaItem.personalSalud.especialidad : "N/A"}</div>
                       </div>
                     ))
                   ) : (

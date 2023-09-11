@@ -2,11 +2,13 @@ import Tratamiento from "../models/tratamiento.model.js";
 import User from "../models/user.model.js";
 import Role from "../models/role.model.js";
 import { transporter } from "../libs/mailer.js";
+import { format } from 'date-fns';
+import esLocale from 'date-fns/locale/es/index.js'
 
 
 export const createTratamiento = async (req, res) => {
   try {
-    const { nombre, descripcion, userId, url } = req.body;
+    const { nombre, descripcion, fechaTratamiento, userId, url } = req.body;
  
     // Verificar si el usuario existe en la base de datos
     const userFound = await User.findById(userId);
@@ -28,7 +30,8 @@ export const createTratamiento = async (req, res) => {
     const newTratamiento = new Tratamiento({
       nombre,
       descripcion,
-      medico: {
+      fechaTratamiento,
+      personalSalud: {
         nombre: req.user.name,
         especialidad: req.user.especialidad,
       },
@@ -41,14 +44,16 @@ export const createTratamiento = async (req, res) => {
 
     // Realizar la populación de la información del usuario asociado al tratamiento
     const tratamientoPopulated = await Tratamiento.findById(newTratamiento._id).populate("user");
-
+    const formattedDate = format(new Date(tratamientoPopulated.fechaTratamiento), 'dd/MM/yyyy HH:mm', {
+      locale: esLocale, // Establece el locale en español
+    });
     try {
       await transporter.sendMail({
         from: 'nicolasde.oyarce@gmail.com',
         to: tratamientoPopulated.user.email,
         subject:`Hola, ${tratamientoPopulated.user.name}`,
-        html: `<b>Se ha indicado el tratamiento "${tratamientoPopulated.nombre}" el día ${tratamientoPopulated.fechaInicio}</b>
-        <b>Para mayor información entra a tu perfil del sistema... </b>`,
+        html: `<b>Se ha indicado el tratamiento "${tratamientoPopulated.nombre}" para el día ${formattedDate} horas</b>
+              <b>Para mayor información entra a tu perfil del sistema... </b>`,
       });
       console.log('Correo electrónico enviado con éxito.');
     } catch (error) {
@@ -91,7 +96,21 @@ export const updateTratamiento = async (req, res) => {
 
     // Realizar la populación de la información del usuario asociado al tratamiento actualizado
     const tratamientoPopulated = await Tratamiento.findById(updatedTratamiento._id).populate("user");
-
+    const formattedDate = format(new Date(tratamientoPopulated.fechaTratamiento), 'dd/MM/yyyy HH:mm', {
+      locale: esLocale, // Establece el locale en español
+    });
+    try {
+      await transporter.sendMail({
+        from: 'nicolasde.oyarce@gmail.com',
+        to: tratamientoPopulated.user.email,
+        subject:`Hola, ${tratamientoPopulated.user.name}`,
+        html: `<b>Se ha modificado el tratamiento "${tratamientoPopulated.nombre}" para el día ${formattedDate} horas</b>
+              <b>Para mayor información entra a tu perfil del sistema... </b>`,
+      });
+      console.log('Correo electrónico enviado con éxito.');
+    } catch (error) {
+      console.error('Error al enviar el correo electrónico:', error);
+    }
     // Verificar si se pudo realizar la populación correctamente
     if (!tratamientoPopulated) {
       return res.status(500).json({
@@ -125,6 +144,7 @@ export const deleteTratamiento = async (req, res) => {
   }
 };
 
+//NO USADAS
 export const getTratamientos = async (req, res) => {
   try {
     // Obtener todos los tratamientos y realizar la población para obtener la información del usuario paciente asociado

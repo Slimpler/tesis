@@ -91,7 +91,7 @@ export const responderReporte = async (req, res) => {
     // Agregar la respuesta al reporte junto con el nombre y especialidad del médico (extraídos del usuario autenticado)
     reporte.respuesta.push({
       respuesta: req.body.respuesta,
-      medico: {
+      personalSalud: {
         nombre: req.user.name,
         especialidad: req.user.especialidad,
       },
@@ -135,6 +135,8 @@ export const deleteReporte = async (req, res) => {
   }
 };
 
+
+//NO USADAS 
 export const getReporte = async (req, res) => {
   try {
     const { id } = req.params;

@@ -22,29 +22,20 @@ export const createRole = async (req, res) => {
   }
 };
 
-export const getRoles = async (req, res) => {
+export const getAdminRole = async (req, res) => {
   try {
-    const roles = await Role.find();
-    return res.json(roles);
-  } catch (error) {
-    console.error('Error fetching roles:', error);
-    return res.status(500).json({ error: 'Error interno del servidor' });
-  }
-};
-
-export const getRole = async (req, res) => {
-  try {
-    const role = await Role.findById(req.params.id);
-    if (!role) {
-      return res.status(404).json({ message: 'Rol no encontrado.' });
+    const adminRole = await Role.findOne({ name: "admin" });
+    if (!adminRole) {
+      return res.status(404).json({ message: 'Rol de administrador no encontrado.' });
     }
-    return res.json(role);
+    return res.json(adminRole);
   } catch (error) {
-    console.error('Error fetching role:', error);
-    return res.status(500).json({ error: 'Error interno del servidor' });
+    console.error("Error fetching admin role:", error);
+    return res.status(500).json({ error: "Error interno del servidor" });
   }
 };
 
+//NO USADAS 
 export const updateRole = async (req, res) => {
   try {
     const role = await Role.findByIdAndUpdate(req.params.id, req.body, {
@@ -75,15 +66,25 @@ export const deleteRole = async (req, res) => {
   }
 };
 
-export const getAdminRole = async (req, res) => {
+export const getRoles = async (req, res) => {
   try {
-    const adminRole = await Role.findOne({ name: "admin" });
-    if (!adminRole) {
-      return res.status(404).json({ message: 'Rol de administrador no encontrado.' });
-    }
-    return res.json(adminRole);
+    const roles = await Role.find();
+    return res.json(roles);
   } catch (error) {
-    console.error("Error fetching admin role:", error);
-    return res.status(500).json({ error: "Error interno del servidor" });
+    console.error('Error fetching roles:', error);
+    return res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
+export const getRole = async (req, res) => {
+  try {
+    const role = await Role.findById(req.params.id);
+    if (!role) {
+      return res.status(404).json({ message: 'Rol no encontrado.' });
+    }
+    return res.json(role);
+  } catch (error) {
+    console.error('Error fetching role:', error);
+    return res.status(500).json({ error: 'Error interno del servidor' });
   }
 };

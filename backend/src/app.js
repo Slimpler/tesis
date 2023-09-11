@@ -12,6 +12,7 @@ import comunidadRoutes from "./routes/comunidad.routes.js";
 import reportesRoutes from "./routes/reportes.routes.js";
 import diagnosticosRoutes from "./routes/diagnosticos.routes.js";
 import tratamientosRoutes from "./routes/tratamientos.routes.js";
+import examenesRoutes from "./routes/examenes.routes.js";
 
 import { FRONTEND_URL } from "./config.js";
 import { createUser, createInitialRoles } from "./libs/initialSetup.js";
@@ -52,6 +53,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/comunidad", comunidadRoutes);
 app.use("/api/diagnosticos", diagnosticosRoutes);
 app.use("/api/tratamientos", tratamientosRoutes);
+app.use("/api/examenes", examenesRoutes);
 
 app.use("/uploads", express.static(path.resolve("uploads")));
 

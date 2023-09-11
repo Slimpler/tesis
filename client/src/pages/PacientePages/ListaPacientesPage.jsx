@@ -118,10 +118,8 @@ const ListaPacientesPage = () => {
               <tr className="bg-blue-500 text-white">
                 <th className="px-4 py-2">Nombre</th>
                 <th className="px-4 py-2">Apellido</th>
-                <th className="px-4 py-2">Diagnóstico</th>
-                <th className="px-4 py-2">Tratamiento</th>
                 <th className="px-4 py-2">Reportes</th>
-                <th className="px-4 py-2">Acciones</th>
+                <th className="px-4 py-2">OTROS</th>
               </tr>
             </thead>
             <tbody>
@@ -141,36 +139,7 @@ const ListaPacientesPage = () => {
                     <td className="border border-gray-200 px-4 py-2">
                       {paciente.lastname}
                     </td>
-                    <td className="border border-gray-200 px-4 py-2">
-                      {paciente.diagnosticos &&
-                      paciente.diagnosticos.length > 0 ? (
-                        <ul className="list-disc pl-4">
-                          {paciente.diagnosticos.map((diagnostico) => (
-                            <li key={diagnostico._id}>
-                              <strong>{diagnostico.nombre}:</strong>{" "}
-                              {diagnostico.descripcion}
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p>Sin diagnóstico</p>
-                      )}
-                    </td>
-                    <td className="border border-gray-200 px-4 py-2">
-                      {paciente.tratamientos &&
-                      paciente.tratamientos.length > 0 ? (
-                        <ul className="list-disc pl-4">
-                          {paciente.tratamientos.map((tratamiento) => (
-                            <li key={tratamiento._id}>
-                              <strong>{tratamiento.nombre}:</strong>{" "}
-                              {tratamiento.descripcion}
-                            </li>
-                          ))}
-                        </ul>
-                      ) : (
-                        <p>Sin tratamiento</p>
-                      )}
-                    </td>
+                 
                     <td className="border border-gray-200 px-4 py-2">
                       {reportesToShow.length > 0 ? (
                         <ul className="list-disc pl-4">
@@ -250,6 +219,11 @@ const ListaPacientesPage = () => {
                       <Link to={`/tratamientos/${paciente._id}`}>
                         <button className="text-purple-500 mr-2">
                           Tratamientos
+                        </button>
+                      </Link>
+                      <Link to={`/examenes/${paciente._id}`}>
+                        <button className="text-yellow-500 mr-2">
+                          Examenes
                         </button>
                       </Link>
                     </td>

@@ -2,6 +2,7 @@
 import User from "../models/user.model.js";
 import Role from "../models/role.model.js";
 import Reporte from "../models/reporte.model.js";
+import Examen from "../models/examen.model.js"
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import Diagnostico from "../models/diagnostico.model.js";
@@ -99,34 +100,6 @@ export const getUsers = async (req, res) => {
       }));
 
       return res.json(mappedUsers);
-    }
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
-};
-
-// Obtener un usuario por su ID con sus roles
-export const getUser = async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id).populate('roles');
-
-    if (!user) {
-      return res.status(404).json({ message: 'El usuario no fue encontrado.' });
-    } else {
-      // Extraer solo los campos necesarios, incluyendo los nombres de los roles
-      const userData = {
-        _id: user._id,
-        name: user.name,
-        lastname: user.lastname,
-        rut: user.rut,
-        especialidad: user.especialidad,
-        email: user.email,
-        roles: user.roles.map(role => role.name),
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
-      };
-
-      return res.json(userData);
     }
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -289,7 +262,7 @@ export const getAdmins = async (req, res) => {
   }
 };
 
-// Obtener todos los pacientes (usuarios con rol "paciente") con sus diagnósticos y tratamientos
+// Obtener todos los pacientes (usuarios con rol "paciente") con sus diagnósticos y tratamientos y examenes
 export const getPacientes = async (req, res) => {
   try {
     // Verificar si el rol "paciente" existe en la tabla "roles"
@@ -318,11 +291,16 @@ export const getPacientes = async (req, res) => {
           // Buscar los tratamientos asociados al paciente
           const tratamientos = await Tratamiento.find({ user: paciente._id });
           
+          // Buscar los examenes asociados al paciente
+          const examenes = await Examen.find({ user: paciente._id });
+
+          // Buscar los reportes asociados al paciente
           const reportes = await Reporte.find({user: paciente._id });
           return {
             ...paciente.toJSON(),
             diagnosticos: diagnosticos,
             tratamientos: tratamientos, 
+            examenes: examenes,
             reportes: reportes,
           };
         })
@@ -362,6 +340,9 @@ export const userProfile = async (req, res) => {
     // Obtener los tratamientos asociados al paciente
     const tratamientos = await Tratamiento.find({ user: userId });
 
+    // Obtener los tratamientos asociados al paciente
+    const examenes = await Examen.find({ user: userId });
+
     // Obtener los reportes del paciente
     const reportes = await Reporte.find({ user: userId });
 
@@ -370,7 +351,8 @@ export const userProfile = async (req, res) => {
       name: paciente.name,
       lastname: paciente.lastname,
       diagnosticos: diagnosticos,
-      tratamientos: tratamientos,
+      tratamientos: tratamientos, 
+      examenes: examenes,
       reportes: reportes,
     };
 
@@ -378,6 +360,38 @@ export const userProfile = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Error al obtener el perfil del paciente.' });
+  }
+};
+
+
+
+//NO USADAS
+
+// Obtener un usuario por su ID con sus roles
+export const getUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).populate('roles');
+
+    if (!user) {
+      return res.status(404).json({ message: 'El usuario no fue encontrado.' });
+    } else {
+      // Extraer solo los campos necesarios, incluyendo los nombres de los roles
+      const userData = {
+        _id: user._id,
+        name: user.name,
+        lastname: user.lastname,
+        rut: user.rut,
+        especialidad: user.especialidad,
+        email: user.email,
+        roles: user.roles.map(role => role.name),
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+      };
+
+      return res.json(userData);
+    }
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
   }
 };
 

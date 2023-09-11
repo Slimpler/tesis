@@ -88,7 +88,7 @@ export const logout = async (req, res) => {
   return res.sendStatus(200);
 };
 
-//Change Password
+//Cambiando contraseña
 export const sendMailChangePassword = async (req, res) => {
   const tokenSecret = process.env.TOKEN_SECRET;
   try {
@@ -138,7 +138,6 @@ export const sendMailChangePassword = async (req, res) => {
       .json({ message: "Error al enviar el correo electrónico" });
   }
 };
-
 export const resetPassword = async (req, res) => {
   const tokenSecret = process.env.TOKEN_SECRET;
   try {

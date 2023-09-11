@@ -5,11 +5,11 @@ import 'react-datepicker/dist/react-datepicker.css'; // Estilos de React-datepic
 import 'react-datepicker/dist/react-datepicker-cssmodules.css'; // Estilos CSS modules de React-datepicker (para Tailwind)
 
 
-const AgregarTratamientoForm = ({ pacienteId, cargarTratamientos }) => {
+const AgregarExamenForm = ({ pacienteId, cargarExamenes }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
-  const [fechaTratamiento, setFechaTratamiento] = useState('');
+  const [fechaExamen, setFechaExamen] = useState('');
   const [url, setUrl] = useState('');
   const [error, setError] = useState(null);
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
@@ -20,8 +20,8 @@ const AgregarTratamientoForm = ({ pacienteId, cargarTratamientos }) => {
     const currentDate = new Date();
     console.log(currentDate)
     if (date > currentDate) {
-      // Actualiza el estado de fechaTratamiento
-      setFechaTratamiento(date);
+      // Actualiza el estado de fechaExamen
+      setFechaExamen(date);
     } else {
       alert('Selecciona una fecha futura');
     }
@@ -29,25 +29,25 @@ const AgregarTratamientoForm = ({ pacienteId, cargarTratamientos }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    // Verificar si fechaTratamiento es un objeto Date
-    if (!(fechaTratamiento instanceof Date)) {
+    // Verificar si fechaExamen es un objeto Date
+    if (!(fechaExamen instanceof Date)) {
       alert('Selecciona una fecha futura');
       return;
     }
   
-    // Crear un objeto con los datos del tratamiento
+    // Crear un objeto con los datos del examen
     const data = {
       nombre,
       descripcion,
-      fechaTratamiento: fechaTratamiento.toISOString(),
+      fechaExamen: fechaExamen.toISOString(),
       userId: pacienteId,
       url,
     };
   
     try {
-      // Enviar la solicitud POST para crear el tratamiento
+      // Enviar la solicitud POST para crear el examen
       setIsLoading(true);
-      const response = await axios.post('/tratamientos/createTratamiento', data, {
+      const response = await axios.post('/examenes/createExamen', data, {
         withCredentials: true,
       });
   
@@ -57,26 +57,26 @@ const AgregarTratamientoForm = ({ pacienteId, cargarTratamientos }) => {
         console.log('Respuesta del servidor no contiene datos válidos.');
       }
   
-      // El tratamiento se creó con éxito
-      // console.log('Tratamiento creado:', response.data);
+      // El examen se creó con éxito
+      // console.log('Examen creado:', response.data);
   
       // Limpiar los campos del formulario
       setNombre('');
       setDescripcion('');
-      setFechaTratamiento(null); // Asignar null a fechaTratamiento
+      setFechaExamen(null); // Asignar null a fechaExamen
       setUrl('');
       setError(null);
   
-      // Recargar la lista de diagnósticos para mostrar el tratamiento recién creado
-      cargarTratamientos();
+      // Recargar la lista de diagnósticos para mostrar el examen recién creado
+      cargarExamenes();
       setMostrarFormulario(false);
     } catch (error) {
-      // Error al crear el tratamiento
+      // Error al crear el examen
       console.log('Error de respuesta completa:', error.response);
       setError(error.response?.data?.message || 'Error desconocido');
   
       // Agregar una alerta o registro de error
-      console.error('Error al crear el tratamiento:', error);
+      console.error('Error al crear el examen:', error);
     } finally {
       setIsLoading(false);
     }
@@ -90,12 +90,12 @@ const AgregarTratamientoForm = ({ pacienteId, cargarTratamientos }) => {
   return (
     <div>
       <button onClick={toggleMostrarFormulario} className="text-blue-500 underline mb-2">
-        {mostrarFormulario ? 'Cancelar' : 'Agregar Tratamiento'}
+        {mostrarFormulario ? 'Cancelar' : 'Agregar Examen'}
       </button>
 
       {mostrarFormulario && (
         <form onSubmit={handleSubmit} className="bg-white p-4 shadow rounded-lg">
-          <h3 className="text-lg font-bold mb-2 text-black">Agregar Tratamiento</h3>
+          <h3 className="text-lg font-bold mb-2 text-black">Agregar Examen</h3>
           <div className="mb-2">
             <label className="block font-bold text-black">Nombre:</label>
             <input
@@ -119,9 +119,9 @@ const AgregarTratamientoForm = ({ pacienteId, cargarTratamientos }) => {
 
 
           <div className="mb-2">
-            <label className="block font-bold text-black">Fecha y Hora del Tratamiento:</label>
+            <label className="block font-bold text-black">Fecha y Hora del Examen:</label>
             <DatePicker
-              selected={fechaTratamiento} // Cambiar selectedDate por fechaTratamiento
+              selected={fechaExamen} // Cambiar selectedDate por fechaExamen
               onChange={handleDateChange}
               minDate={new Date()}
               showTimeSelect
@@ -173,14 +173,14 @@ const AgregarTratamientoForm = ({ pacienteId, cargarTratamientos }) => {
                 ></path>
               </svg>
             ) : (
-              'Crear Tratamiento'
+              'Crear Examen'
             )}
           </button>
-          {error && <p className="text-red-500 mt-2">Error al crear el tratamiento: {error}</p>}
+          {error && <p className="text-red-500 mt-2">Error al crear el examen: {error}</p>}
         </form>
       )}
     </div>
   );
 };
 
-export default AgregarTratamientoForm;
+export default AgregarExamenForm;

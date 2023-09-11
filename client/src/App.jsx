@@ -42,6 +42,7 @@ import ReportarSintomasPage from "./pages/ReportePages/ReportarSintomasPage";
 import ModeratorProfile from "./pages/ModeratorPages/ModeratorProfilePage";
 import ListadoReportesPage from "./pages/ReportePages/ListadoReportesPage";
 
+import AdministrarExamenesPage from "./pages/ExamenPages/AdministrarExamenPage";
 
 function App() {
   return (
@@ -72,6 +73,7 @@ function App() {
                 <Route element={<ProtectedRouteModerator/>}>
                     <Route path="/diagnosticos/:pacienteId" element={<AdministrarDiagnosticosPage />} />
                     <Route path="/tratamientos/:pacienteId" element={<AdministrarTratamientosPage />} />
+                    <Route path="/examenes/:pacienteId" element={<AdministrarExamenesPage />} />
                     <Route path="/responderReporte/:reporteId" element={<ResponderReportesPage />} />
                     <Route path="/ModeratorProfile" element={<ListaPacientesPage />} />
                     <Route path="/Aportes" element={<AportesPage/>}/>

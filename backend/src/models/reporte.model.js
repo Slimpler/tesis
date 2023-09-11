@@ -27,7 +27,7 @@ const reporteSchema = new mongoose.Schema(
       respuesta: {
         type: String, 
       },
-      medico: {
+      personalSalud: {
         nombre: {
           type: String,
           require: true,

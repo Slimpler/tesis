@@ -2,7 +2,8 @@ import Diagnostico from "../models/diagnostico.model.js";
 import User from "../models/user.model.js";
 import Role from "../models/role.model.js";
 import { transporter } from "../libs/mailer.js";
-
+import { format } from 'date-fns';
+import esLocale from 'date-fns/locale/es/index.js'
 
 export const createDiagnostico = async (req, res) => {
   try {
@@ -30,7 +31,7 @@ export const createDiagnostico = async (req, res) => {
       nombre,
       descripcion,
       estadio,
-      medico: { 
+      personalSalud: { 
         nombre: req.user.name,
         especialidad: req.user.especialidad,
       },
@@ -42,13 +43,16 @@ export const createDiagnostico = async (req, res) => {
     await newDiagnostico.save();
     // Realizar la populación de la información del usuario asociado al diagnóstico
     const diagnosticoPopulated = await Diagnostico.findById(newDiagnostico._id).populate("user");
+    const formattedDate = format(new Date(diagnosticoPopulated.fechaInicio), 'dd/MM/yyyy HH:mm', {
+      locale: esLocale, // Establece el locale en español
+    });
     // Enviar correo electrónico a la cuenta registrada por el usuario que crea el diagnóstico
     try {
       await transporter.sendMail({
         from: 'nicolasde.oyarce@gmail.com',
         to: diagnosticoPopulated.user.email,
         subject:`Hola, ${diagnosticoPopulated.user.name}`,
-        html: `<b>Se ha indicado el diagnóstico "${diagnosticoPopulated.nombre}" el día ${diagnosticoPopulated.fechaInicio}</b>`,
+        html: `<b>Se ha indicado el diagnóstico "${diagnosticoPopulated.nombre}" el día ${formattedDate}</b>`,
       });
       console.log('Correo electrónico enviado con éxito.');
     } catch (error) {
@@ -84,7 +88,7 @@ export const updateDiagnostico = async (req, res) => {
     diagnostico.descripcion = descripcion;
     diagnostico.url = url;
     diagnostico.estadio = estadio;
-    diagnostico.medico = {
+    diagnostico.personalSalud = {
       nombre: req.user.name,
       especialidad: req.user.especialidad,
     };
@@ -94,7 +98,21 @@ export const updateDiagnostico = async (req, res) => {
 
     // Realizar la populación de la información del usuario asociado al diagnóstico actualizado
     const diagnosticoPopulated = await Diagnostico.findById(updatedDiagnostico._id).populate("user");
-
+    const formattedDate = format(new Date(diagnosticoPopulated.fechaInicio), 'dd/MM/yyyy HH:mm', {
+      locale: esLocale, // Establece el locale en español
+    });
+    // Enviar correo electrónico a la cuenta registrada por el usuario que crea el diagnóstico
+    try {
+      await transporter.sendMail({
+        from: 'nicolasde.oyarce@gmail.com',
+        to: diagnosticoPopulated.user.email,
+        subject:`Hola, ${diagnosticoPopulated.user.name}`,
+        html: `<b>Se ha modificado el diagnóstico "${diagnosticoPopulated.nombre}" el día ${formattedDate}</b>`,
+      });
+      console.log('Correo electrónico enviado con éxito.');
+    } catch (error) {
+      console.error('Error al enviar el correo electrónico:', error);
+    }
     // Verificar si se pudo realizar la populación correctamente
     if (!diagnosticoPopulated) {
       return res.status(500).json({
@@ -122,13 +140,15 @@ export const deleteDiagnostico = async (req, res) => {
 
     // Eliminar el diagnóstico de la base de datos
     await Diagnostico.findByIdAndDelete(id);
-
+    
     res.json({ message: "Diagnóstico eliminado exitosamente." });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
+
+//NO USADAS 
 export const getDiagnosticos = async (req, res) => {
   try {
     // Obtener todos los diagnósticos y realizar la población para obtener la información del usuario paciente asociado

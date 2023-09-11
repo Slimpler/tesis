@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const tratamientoSchema = new mongoose.Schema(
+const examenSchema = new mongoose.Schema(
   {
     nombre: {
       type: String,
@@ -10,7 +10,7 @@ const tratamientoSchema = new mongoose.Schema(
       type: String,
       require: true,
     },
-    fechaTratamiento: {
+    fechaExamen: {
       type: Date,
       require: true,
     },
@@ -35,4 +35,4 @@ const tratamientoSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-export default mongoose.model("Tratamiento", tratamientoSchema);
+export default mongoose.model("Examen", examenSchema);

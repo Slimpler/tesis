@@ -8,6 +8,7 @@ const PacienteProfilePage = () => {
   const { user, loading } = useAuth();
   const [perfilPaciente, setPerfilPaciente] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedSection, setSelectedSection] = useState(null);
 
   useEffect(() => {
     const fetchPerfilPaciente = async () => {
@@ -37,139 +38,222 @@ const PacienteProfilePage = () => {
   });
 
   return (
-    <div className="max-w-4xl mx-auto p-4 bg-gray-100 rounded-lg shadow-md text-black">
+    <div className="max-w-6xl mx-auto p-4 bg-gray-100 rounded-lg shadow-md text-black">
       <h1 className="text-3xl font-bold mb-4 text-center">{`${perfilPaciente.name} ${perfilPaciente.lastname}`}</h1>
 
-      {/* Sección Diagnósticos */}
-      <div className="mt-4">
-        <h3 className="text-lg font-bold mb-2">Diagnósticos:</h3>
-        <div className="overflow-x-auto">
-          {perfilPaciente.diagnosticos && perfilPaciente.diagnosticos.length > 0 ? (
-            <table className="min-w-full table-auto border-collapse mb-4">
-              <thead>
-                <tr>
-                  <th className="border border-gray-400 px-4 py-2 font-bold">Nombre</th>
-                  <th className="border border-gray-400 px-4 py-2 font-bold">Descripción</th>
-                  <th className="border border-gray-400 px-4 py-2 font-bold">Video orientativo</th>
-                  <th className="border border-gray-400 px-4 py-2 font-bold">Médico</th>
-                  <th className="border border-gray-400 px-4 py-2 font-bold">Especialidad</th>
-                </tr>
-              </thead>
-              <tbody>
-                {perfilPaciente.diagnosticos.map((diagnostico) => (
-                  <tr key={diagnostico._id}>
-                    <td className="border border-gray-400 px-4 py-2">{diagnostico.nombre}</td>
-                    <td className="border border-gray-400 px-4 py-2">{diagnostico.descripcion}</td>
-                    <td className="border border-gray-400 px-4 py-2">
-                      {diagnostico.url ? (
-                         <ReactPlayer
-                         url={diagnostico.url}
-                         width="300px"
-                         height="200px"
-                       />
-                     ) : (
-                       <p>No hay video disponible.</p>
-                      )}
-                    </td>
-                    <td className="border border-gray-400 px-4 py-2">{diagnostico.medico?.nombre}</td>
-                    <td className="border border-gray-400 px-4 py-2">{diagnostico.medico?.especialidad}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <p>No hay diagnósticos disponibles.</p>
-          )}
-        </div>
+      {/* Botones para mostrar/ocultar secciones */}
+      <div className="flex flex-wrap justify-center space-y-2 md:space-y-0 md:space-x-2 mb-4">
+        <button
+          className={`${
+            selectedSection === 'diagnostico' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700'
+          } px-4 py-2 rounded-lg flex-1 md:flex-initial mr-2`}
+          onClick={() => setSelectedSection('diagnostico')}
+        >
+          Diagnósticos
+        </button>
+        <button
+          className={`${
+            selectedSection === 'tratamientos' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700'
+          } px-4 py-2 rounded-lg flex-1 md:flex-initial mr-2`}
+          onClick={() => setSelectedSection('tratamientos')}
+        >
+          Tratamientos
+        </button>
+        <button
+          className={`${
+            selectedSection === 'examenes' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700'
+          } px-4 py-2 rounded-lg flex-1 md:flex-initial mr-2`}
+          onClick={() => setSelectedSection('examenes')}
+        >
+          Examenes
+        </button>
+        <button
+          className={`${
+            selectedSection === 'reportes' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-700'
+          } px-4 py-2 rounded-lg flex-1 md:flex-initial`}
+          onClick={() => setSelectedSection('reportes')}
+        >
+          Reportes
+        </button>
       </div>
 
+      {/* Sección Diagnósticos */}
+      {selectedSection === 'diagnostico' && (
+        <div className="mt-4">
+          <h3 className="text-lg font-bold mb-2">Diagnósticos:</h3>
+          <div className="overflow-x-auto">
+            {perfilPaciente.diagnosticos && perfilPaciente.diagnosticos.length > 0 ? (
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Nombre
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Descripción
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Video orientativo
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {perfilPaciente.diagnosticos.map((diagnostico) => (
+                    <tr key={diagnostico._id}>
+                      <td className="px-6 py-4 whitespace-nowrap">{diagnostico.nombre}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">{diagnostico.descripcion}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {diagnostico.url ? (
+                          <ReactPlayer url={diagnostico.url} width="200px" height="100px" />
+                        ) : (
+                          <p className="text-gray-400">No hay video disponible.</p>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>No hay diagnósticos disponibles.</p>
+            )}
+          </div>
+        </div>
+      )}
+
+
       {/* Sección Tratamientos */}
+      {selectedSection === 'tratamientos' && (
+        <div className="mt-4">
+          <h3 className="text-lg font-bold mb-2">Tratamientos:</h3>
+          <div className="overflow-x-auto">
+            {perfilPaciente.tratamientos && perfilPaciente.tratamientos.length > 0 ? (
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Nombre
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Descripción
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Fecha
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Video orientativo
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {perfilPaciente.tratamientos.map((tratamiento) => (
+                    <tr key={tratamiento._id}>
+                      <td className="px-6 py-4 whitespace-nowrap">{tratamiento.nombre}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">{tratamiento.descripcion}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {new Date(tratamiento.fechaTratamiento).toLocaleString()}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {tratamiento.url ? (
+                          <ReactPlayer url={tratamiento.url} width="200px" height="100px" />
+                        ) : (
+                          <p className="text-gray-400">No hay video disponible.</p>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>No hay tratamientos disponibles.</p>
+            )}
+          </div>
+        </div>
+      )}
+    
+      {/* Sección Examenes */}
+      {selectedSection === 'examenes' && (
       <div className="mt-4">
         <h3 className="text-lg font-bold mb-2">Tratamientos:</h3>
         <div className="overflow-x-auto">
           {perfilPaciente.tratamientos && perfilPaciente.tratamientos.length > 0 ? (
-            <table className="min-w-full table-auto border-collapse mb-4">
-              <thead>
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
                 <tr>
-                  <th className="border border-gray-400 px-4 py-2 font-bold">Nombre</th>
-                  <th className="border border-gray-400 px-4 py-2 font-bold">Descripción</th>
-                  <th className="border border-gray-400 px-4 py-2 font-bold">Video orientativo</th>
-                  <th className="border border-gray-400 px-4 py-2 font-bold">Médico</th>
-                  <th className="border border-gray-400 px-4 py-2 font-bold">Especialidad</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Nombre
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Descripción
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Fecha
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Video orientativo
+                  </th>
                 </tr>
               </thead>
-              <tbody>
-                {perfilPaciente.tratamientos.map((tratamiento) => (
-                  <tr key={tratamiento._id}>
-                    <td className="border border-gray-400 px-4 py-2">{tratamiento.nombre}</td>
-                    <td className="border border-gray-400 px-4 py-2">{tratamiento.descripcion}</td>
-                    <td className="border border-gray-400 px-4 py-2">
-                      {tratamiento.url ? (
-                         <ReactPlayer
-                         url={tratamiento.url}
-                         width="300px"
-                         height="200px"
-                       />
-                     ) : (
-                       <p>No hay video disponible.</p>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {perfilPaciente.examenes.map((examen) => (
+                  <tr key={examen._id}>
+                    <td className="px-6 py-4 whitespace-nowrap">{examen.nombre}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{examen.descripcion}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {new Date(examen.fechaExamen).toLocaleString()}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {examen.url ? (
+                        <ReactPlayer url={examen.url} width="200px" height="100px" />
+                      ) : (
+                        <p className="text-gray-400">No hay video disponible.</p>
                       )}
                     </td>
-                    <td className="border border-gray-400 px-4 py-2">{tratamiento.medico?.nombre}</td>
-                    <td className="border border-gray-400 px-4 py-2">{tratamiento.medico?.especialidad}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           ) : (
-            <p>No hay tratamientos disponibles.</p>
+            <p>No hay examenes disponibles.</p>
           )}
         </div>
       </div>
+    )}
 
       {/* Sección Reportes */}
-      <div className="mt-4">
-        <h3 className="text-lg font-bold mb-2">Reportes:</h3>
-        <div className="overflow-x-auto">
-          {reportesRecientes && reportesRecientes.length > 0 ? (
-            <table className="min-w-full table-auto border-collapse mb-4">
-              <thead>
-                <tr>
-                  <th className="border border-gray-400 px-4 py-2 font-bold">Síntoma</th>
-                  <th className="border border-gray-400 px-4 py-2 font-bold">Escala</th>
-                  <th className="border border-gray-400 px-4 py-2 font-bold">Respuesta</th>
-                  <th className="border border-gray-400 px-4 py-2 font-bold">Médico</th>
-                  <th className="border border-gray-400 px-4 py-2 font-bold">Especialidad</th>
-                </tr>
-              </thead>
-              <tbody>
-                {reportesRecientes.map((reporte) => (
-                  <tr key={reporte._id}>
-                    <td className="border border-gray-400 px-4 py-2">{reporte.sintoma}</td>
-                    <td className="border border-gray-400 px-4 py-2">{reporte.escala}</td>
-                    <td className="border border-gray-400 px-4 py-2">
-                      {reporte.respuesta.map((respuesta) => (
-                        <div key={respuesta._id}>{respuesta.respuesta}</div>
-                      ))}
-                    </td>
-                    <td className="border border-gray-400 px-4 py-2">
-                      {reporte.respuesta.map((respuesta) => (
-                        <div key={respuesta._id}>{respuesta.medico?.nombre}</div>
-                      ))}
-                    </td>
-                    <td className="border border-gray-400 px-4 py-2">
-                      {reporte.respuesta.map((respuesta) => (
-                        <div key={respuesta._id}>{respuesta.medico?.especialidad}</div>
-                      ))}
-                    </td>
+      {selectedSection === 'reportes' && (
+       
+       <div className="mt-4">
+          <h3 className="text-lg font-bold mb-2">Reportes:</h3>
+          <div className="overflow-x-auto">
+            {reportesRecientes && reportesRecientes.length > 0 ? (
+              <table className="min-w-full table-auto border-collapse mb-4">
+                <thead>
+                  <tr>
+                    <th className="border border-gray-400 px-4 py-2 font-bold">Síntoma</th>
+                    <th className="border border-gray-400 px-4 py-2 font-bold">Escala</th>
+                    <th className="border border-gray-400 px-4 py-2 font-bold">Respuesta</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <p>No hay Reportes disponibles.</p>
-          )}
+                </thead>
+                <tbody>
+                  {reportesRecientes.map((reporte) => (
+                    <tr key={reporte._id}>
+                      <td className="border border-gray-400 px-4 py-2">{reporte.sintoma}</td>
+                      <td className="border border-gray-400 px-4 py-2">{reporte.escala}</td>
+                      <td className="border border-gray-400 px-4 py-2">
+                        {reporte.respuesta.map((respuesta) => (
+                          <div key={respuesta._id}>{respuesta.respuesta}</div>
+                        ))}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p>No hay Reportes disponibles.</p>
+            )}
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="mt-8 flex flex-wrap justify-center">
         <Link
